@@ -41,11 +41,11 @@ namespace WebSiteClothesStore.Models
 
         public double? GiamGia { get; set; }
 
-        public int MaNCC { get; set; }
+        public int? MaNCC { get; set; }
 
         public int MaLoai { get; set; }
 
-        public int MaNSX { get; set; }
+        public int? MaNSX { get; set; }
 
         public bool? DaXoa { get; set; }
 

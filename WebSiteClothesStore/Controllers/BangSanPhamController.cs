@@ -71,15 +71,21 @@ namespace WebSiteClothesStore.Controllers
             file.SaveAs(Server.MapPath("~/Content/images/" + file.FileName));
             return "/Content/images/" + file.FileName;
         }
+
+        public ActionResult Create()
+        {
+            var listCategory = context.LoaiSanPhams;
+            ViewBag.ListLoai = listCategory;
+            return View();
+        }
+        [HttpPost]
         public ActionResult Create(BangSanPham bspCreate)
         {
             if (ModelState.IsValid)
             {
 
                 BangSanPham bsp = bspCreate;
-                var listbsp = context.BangSanPhams.ToList();
-                var newId = listbsp.Max(n => n.MaSP) + 1;
-                bsp.MaSP = newId;
+               
                 context.BangSanPhams.Add(bsp);
                 context.SaveChanges();
 

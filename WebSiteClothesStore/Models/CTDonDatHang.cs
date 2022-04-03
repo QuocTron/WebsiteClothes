@@ -12,9 +12,7 @@ namespace WebSiteClothesStore.Models
         [Key]
         public int MaCTDDH { get; set; }
 
-        public int? MaDDH { get; set; }
-
-        public int MaSP { get; set; }
+        public int MaDDH { get; set; }
 
         [StringLength(50)]
         public string TenSP { get; set; }
@@ -22,13 +20,18 @@ namespace WebSiteClothesStore.Models
         public int SoLuong { get; set; }
 
         [Column(TypeName = "money")]
-        public decimal DonGia { get; set; }
+        public decimal? DonGia { get; set; }
+
+        public int? BinhChon { get; set; }
+
+        public int? MaSP { get; set; }
 
         public int? MaCTSP { get; set; }
-        public int? BinhChon { get; set; }
 
         public virtual BangSanPham BangSanPham { get; set; }
 
         public virtual CTSanPham CTSanPham { get; set; }
+
+        public virtual DonDatHang DonDatHang { get; set; }
     }
 }

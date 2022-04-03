@@ -2,15 +2,15 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/HomeLayout/ProductLayout.cshtml";
+    Layout = "~/Views/HomeLayout/ProductLayoutAdmin.cshtml";
 }
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>BangSanPham</h4>
         <hr />
@@ -32,50 +32,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NgapCapNhat, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgapCapNhat, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NgapCapNhat, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LuotXem, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LuotXem, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LuotXem, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LuotBinhChon, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LuotBinhChon, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LuotBinhChon, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LuotBInhLuan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LuotBInhLuan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LuotBInhLuan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SoLanMua, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SoLanMua, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SoLanMua, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -87,77 +47,90 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MaNCC, "MaNCC", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MaNCC", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MaNCC, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.MaLoai, "MaLoai", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MaLoai", null, htmlAttributes: new { @class = "form-control" })
+                <select name="LoaiSanPham">
+                    @foreach (var item in ViewBag.ListLoai)
+                    {
+                        <option value="@item.MaLoai"> @item.TenLoai</option>
+                    }
+
+                </select>
                 @Html.ValidationMessageFor(model => model.MaLoai, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MaNSX, "MaNSX", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">
+                Hình ảnh
+            </label>
             <div class="col-md-10">
-                @Html.DropDownList("MaNSX", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MaNSX, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Anh1, new { htmlAttributes = new { @class = "form-control label-hide hinhAnh1 hinhInputHide" } })
+
+                <input id="Anh1" type="file" name="fileUpload"class="Anh1 inputAnh1"  width="150px" height="150px" accept="image/*"
+                       style="display:none;" />
+                <input type="button" value="Chọn" class="btn btn-success btn-chon btnUpload" data-id="Anh1" />
+                <img src="" class="Anh1" id="Anh1" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                Hình ảnh
+            </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Anh2, new { htmlAttributes = new { @class = "form-control label-hide hinhAnh2 hinhInputHide" } })
+
+                <input id="Anh2" type="file" name="fileUpload" class="Anh2 inputAnh2" width="150px" height="150px" accept="image/*"
+                       style="display:none;" />
+                <input type="button" value="Chọn" class="btn btn-success btn-chon btnUpload" data-id="Anh2" />
+                <img src="" class="Anh2" id="Anh2" />
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DaXoa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">
+                Hình ảnh
+            </label>
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.DaXoa)
-                    @Html.ValidationMessageFor(model => model.DaXoa, "", new { @class = "text-danger" })
-                </div>
+                @Html.EditorFor(model => model.Anh3, new { htmlAttributes = new { @class = "form-control label-hide hinhAnh3 hinhInputHide" } })
+
+                <input id="Anh3" type="file" name="fileUpload" class="Anh3 inputAnh3"width="150px" height="150px" accept="image/*"
+                       style="display:none;" />
+                <input type="button" value="Chọn" class="btn btn-success btn-chon btnUpload" data-id="Anh3" />
+                <img src="" class="Anh3" id="Anh3" />
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Anh1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">
+                Hình ảnh
+            </label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Anh1, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Anh1, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Anh5, new { htmlAttributes = new { @class = "form-control label-hide hinhAnh4 hinhInputHide" } })
+
+                <input id="Anh4" type="file" name="fileUpload" class="Anh4 inputAnh4" width="150px" height="150px" accept="image/*"
+                       style="display:none;" />
+                <input type="button" value="Chọn" class="btn btn-success btn-chon btnUpload" data-id="Anh4" />
+                <img src="" class="Anh4" id="Anh4" />
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Anh2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">
+                Hình ảnh
+            </label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Anh2, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Anh2, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @Html.EditorFor(model => model.Anh5, new { htmlAttributes = new { @class = "form-control label-hide hinhAnh5 hinhInputHide" } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Anh3, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Anh3, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Anh3, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Anh4, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Anh4, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Anh4, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Anh5, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Anh5, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Anh5, "", new { @class = "text-danger" })
+                <input id="Anh5" type="file" name="fileUpload" class="Anh5 inputAnh5"  width="150px" height="150px" accept="image/*"
+                       style="display:none;" />
+                <input type="button" value="Chọn" class="btn btn-success btn-chon btnUpload" data-id="Anh5" />
+                <img src="" class="Anh5" id="Anh5" />
             </div>
         </div>
 
@@ -172,3 +145,49 @@
 <div>
     @Html.ActionLink("Back to List", "ListSanPham")
 </div>
+<style>
+   
+</style>
+@section upload
+{
+    <script>
+
+        $(function () {
+            $('.btnUpload').click(function () {
+               var idInputFile = $(this).attr("data-id");
+                $('.' + idInputFile).trigger('click');
+                $('.' + idInputFile).change(function () {
+                    console.log(idInputFile);
+                    if (window.FormData !== undefined) {
+                        console.log("Vô nè");
+                        var fileUpload = $('.' + idInputFile).get(0);
+                        console.log(fileUpload);
+                        var files = fileUpload.files;
+                        console.log(files);
+                        var formData = new FormData();
+                        console.log(formData);
+                        formData.append('file', files[0]);
+                        $.ajax(
+                            {
+                                type: 'POST',
+                                url: '/BangSanPham/ProcessUpload',
+                                contentType: false,
+                                processData: false,
+                                data: formData,
+                                success: function (urlImage) {
+                                    $('.' + idInputFile).attr('src', urlImage);
+                                    $('.hinh' + idInputFile).val(urlImage);
+                                },
+                                error: function (err) {
+                                    alert('Error ', err.statusText);
+
+                                }
+                            });
+                    }
+                });
+            });
+        });
+
+        
+    </script>
+}
