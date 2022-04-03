@@ -111,8 +111,20 @@ namespace WebSiteClothesStore.Controllers
             return View(lsp);*/
             var D_sp = context.BangSanPhams.Where(m => m.MaSP == id).First();
             var listCTPro = context.CTSanPhams.Where(p => p.MaSP == D_sp.MaSP);
+            var listCard = context.CTDonDatHangs.Where(p => p.MaSP == D_sp.MaSP);
+
+            foreach (var item in listCard)
+            {
+                using (var data = new MydataContext())
+                {
+                    item.MaCTSP =null;
+                    item.MaSP = null;
+                    // xoa tung chi tiet san pham
+                    data.SaveChanges();
+                }
+            }
             // lay ra taat car chi tiet san pham thuoc cai sanr pham
-            foreach(var item in listCTPro)
+            foreach (var item in listCTPro)
             {
                 using (var data = new MydataContext())
                 {
