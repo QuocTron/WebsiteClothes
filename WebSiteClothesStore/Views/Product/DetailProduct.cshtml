@@ -1,0 +1,322 @@
+﻿@using WebSiteClothesStore.Models
+
+@{
+    Layout = "~/Views/HomeLayout/ProductLayout.cshtml";
+}
+@{
+
+    IEnumerable<BangSanPham> listProduct = (IEnumerable<BangSanPham>)ViewBag.ListPro;
+    BangSanPham product = ViewBag.Product as BangSanPham;
+}
+
+
+<body>
+    <div>
+        <hr />
+        <div class="detailProduct">
+
+            <div class="imageProduct">
+                <img class="imageMain" src="@product.Anh1" />
+                <div class="box-imageExtra">
+                    <img class="imageExtra" src="@product.Anh1" />
+                    <img class="imageExtra" src="@product.Anh2" />
+                    <img class="imageExtra" src="@product.Anh3" />
+                </div>
+            </div>
+            <div class="contentProduct">
+
+                <span>Tên sản phẩm:</span>
+                @Html.DisplayFor(model => product.TenSP)
+
+                <span>Tên nhà sản xuất: </span>
+                @Html.DisplayFor(model => product.NhaSX.TenNSX)
+
+                <span>Loại sản phẩm: </span>
+
+                @Html.DisplayFor(model => product.LoaiSanPham.TenLoai)
+              
+                @if (product.CTSanPhams.Sum(p => p.SoLuongTon) == 0)
+                {
+                    <span class="inventory-product">Hết hàng</span>
+                }
+                else
+                {
+                    <span class="inventory-product">Còn hàng</span>
+                }
+
+                @if (product.GiamGia != 0)
+                {
+                    double newPrice = (double)((double)product.Dongia - (double)product.Dongia * product.GiamGia / 100);
+                    <span class="discount-product">- @product.GiamGia %</span>
+                    <span class="price">
+
+                        <span>Đơn giá</span>
+                        <del style="margin-right:10px;">
+                            <span class="woocommerce-Price-amount amount">
+                                @product.Dongia.ToString("#,##")
+                                <span class="woocommerce-Price-currencySymbol">đ</span>
+                            </span>
+                        </del>
+
+                        <ins>
+                            <span class="woocommerce-Price-amount amount">
+                                @newPrice.ToString("#,##")
+                                <span class="woocommerce-Price-currencySymbol">đ</span>
+                            </span>
+                        </ins>
+                    </span>
+                }
+                else
+                {
+                    <span>Đơn giá: </span>
+
+                    <span class="woocommerce-Price-amount amount">
+                        @product.Dongia.ToString("#,##")
+                        <span class="woocommerce-Price-currencySymbol">đ</span>
+                    </span>
+                }
+
+                <span>Lượt xem: </span>
+                @Html.DisplayFor(model => product.LuotXem)
+                <span>Lượt chọn: </span>
+                @Html.DisplayFor(model => product.LuotBinhChon)
+                <span>Lượt bình luận: </span>
+                @Html.DisplayFor(model => product.LuotBInhLuan)
+                <span>Số lần mua: </span>
+                @Html.DisplayFor(model => product.SoLanMua)
+
+                @*@using (Ajax.BeginForm("AddProCard", "Card" ,new { @maSP = product.MaSP }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "totalThayThe", InsertionMode = InsertionMode.Replace,}))
+        {*@
+                <div class="countBuy">
+                    <input class="soLuong" style="display:none;" name="soLuong" id="soLuong" , type="number" min="1" max="500" required value="1" /> <label for="soLuong" id="lableSoLuong"></label>
+                </div>
+                <div class="sizeProduct">
+                    @{
+                        var listSize = product.CTSanPhams.Where(p => p.MaSP == product.MaSP);
+                        int i = 0;
+
+                        foreach (var size in listSize)
+                        {
+                            i++;
+                            @*<div class="size" id="size" name="size" value="@size.MaCT">@size.KichThuoc</div>*@
+
+                            <input class="radio-size @i" name="size" value="@size.MaCT" id="@size.KichThuoc" data-id="@size.MaCT" type="radio" required />
+                            <label for="@size.KichThuoc" data-count="@size.SoLuongTon" class="label-size @i">@size.KichThuoc</label>
+                        }
+
+                        <input type="submit" id="orderPro" data-id="@product.MaSP" value="Thêm giỏ hàng" />
+                    }
+                </div>
+               
+                <span>Mô tả</span>
+                @Html.DisplayFor(model => product.MoTa)
+
+
+                @* } *@
+            </div>
+        </div>
+
+    </div>
+    <h2>Sản phẩm cùng loại</h2>
+    @foreach (var item in listProduct)
+    {
+        <a class="linkProduct" href="@Url.Action("DetailProduct","Product",new {@maSP =item.MaSP})">
+            <div class="product-small box ">
+                <div class="box-image">
+                    <div class="image-fade_in_back">
+
+                        <img width="300" height="300" src="@item.Anh1">
+
+                        @if (item.GiamGia != 0)
+                        {
+                            <div class="discount-product">- @item.GiamGia %</div>
+                        }
+
+                        @if (item.CTSanPhams.Sum(p => p.SoLuongTon) == 0)
+                        {
+                            <span class="inventory-product">Hết hàng</span>
+                        }
+                        <div class="image-tools is-small top right show-on-hover">
+                        </div>
+                        <div class="image-tools is-small hide-for-small bottom left show-on-hover">
+                        </div>
+                        <div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+                        </div>
+                    </div><!-- box-image -->
+
+                    @if (item.GiamGia != 0)
+                    {
+                        double newPrice = (double)((double)item.Dongia - (double)item.Dongia * item.GiamGia / 100);
+                        <span class="price">
+                            <del style="margin-right:10px;">
+                                <span class="woocommerce-Price-amount amount">
+                                    @item.Dongia.ToString("#,##")
+                                    <span class="woocommerce-Price-currencySymbol">đ</span>
+                                </span>
+                            </del>
+
+                            <ins>
+                                <span class="woocommerce-Price-amount amount">
+                                    @newPrice.ToString("#,##")
+                                    <span class="woocommerce-Price-currencySymbol">đ</span>
+                                </span>
+                            </ins>
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="price">
+                            <ins>
+                                <span class="woocommerce-Price-amount amount">
+                                    @item.Dongia.ToString("#,##") VNĐ
+                                    <span class="woocommerce-Price-currencySymbol">đ</span>
+                                </span>
+                            </ins>
+                        </span>
+                    }
+
+                    <div class="box-text box-text-products text-center grid-style-2">
+                        <div class="title-wrapper"><p class="name product-title"><a href="">@item.TenSP</a></p></div>
+
+                    </div><!-- box-text -->
+                </div>
+            </div>
+        </a>
+    }
+    <style>
+        .detailProduct {
+            display: flex;
+        }
+
+        .countBuy {
+            display: flex;
+        }
+
+        .imageProduct {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img.imageMain {
+            width: 100%;
+        }
+
+        img.imageExtra {
+            width: 13%;
+            border: 1px solid black;
+        }
+
+        .box-imageExtra {
+            border: 2px solid black;
+            height: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 10px;
+        }
+
+        .imageProduct {
+            width: 50%;
+        }
+
+        .contentProduct {
+            display: flex;
+            flex-direction: column;
+            margin-left: 50px;
+        }
+
+        .radio-size {
+            display: none;
+        }
+
+        .label-size {
+            border: 1px solid black;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+
+        .label-size.active {
+            background-color: red;
+            color: white;
+        }
+
+        .sizeProduct{
+            display:flex;
+        }
+        #orderPro.enable {
+        }
+    </style>
+    <script>
+
+        var radioFirst = $(".radio-size.1");
+
+        $(".radio-size.1").attr('checked', 'checked');
+
+        if ($(".radio-size.1").attr('checked', 'checked')) {
+            $(".label-size.1").addClass("active");
+            var countPro = $(".label-size.1").data("count");
+            if (countPro == 0) {
+                document.getElementById("orderPro").disabled = true;
+            } else {
+                document.getElementById("orderPro").disabled = false;
+            }
+        }
+        var listLableSize = document.querySelectorAll(".label-size")
+        $(".label-size").click(function () {
+            listLableSize.forEach(function (item) {
+                if (item.classList.contains("active")) {
+                    item.classList.remove("active");
+                }
+            });
+            this.classList.add("active");
+            var countPro = $(this).data("count");
+            if (countPro == 0) {
+                document.getElementById("orderPro").disabled = true;
+            } else {
+                document.getElementById("orderPro").disabled = false;
+            }
+
+        });
+
+        $("#soLuong").change(function (e) {
+            var countInput = $("#soLuong").val();
+            var countStill = $(".label-size.active").data("count");
+            if (countInput > countStill) {
+                document.getElementById("orderPro").disabled = true;
+                $("#lableSoLuong").html("Sản phẩm không đủ");
+            } else {
+                document.getElementById("orderPro").disabled = false;
+                $("#lableSoLuong").html("");
+            }
+        })
+        var maPro = $("#orderPro").data("id");
+
+        var countBuy = $("#soLuong").val();
+        var masize
+        var listSizeRadio = document.querySelectorAll(".radio-size")
+        $("#orderPro").click(function () {
+            listSizeRadio.forEach(function (radio) {
+                if (radio.checked == true) {
+                    masize = radio.value;
+                }
+            })
+            $.ajax({
+                type: 'POST',
+                data: { maSP: maPro, sLMua: countBuy, maSize: masize },
+                url: '/Card/AddProCard',
+                success: function (count) {
+                    $("#countCard").html(count);
+                    setTimeout(function () { alert("Mua hàng thành công") }
+                        , 100)
+                }
+            })
+
+        });
+        $(".imageExtra").click(function () {
+            $(".imageMain").attr('src', $(this).attr('src'));
+
+            console.log($(this).attr('src'));
+        })
+    </script>
