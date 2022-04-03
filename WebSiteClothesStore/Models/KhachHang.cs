@@ -31,6 +31,7 @@ namespace WebSiteClothesStore.Models
         [StringLength(12)]
         public string SDT { get; set; }
 
+
         public int? MaTV { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

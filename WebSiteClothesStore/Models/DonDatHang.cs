@@ -9,12 +9,6 @@ namespace WebSiteClothesStore.Models
     [Table("DonDatHang")]
     public partial class DonDatHang
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DonDatHang()
-        {
-            CTDonDatHangs = new HashSet<CTDonDatHang>();
-        }
-
         [Key]
         public int MaDDH { get; set; }
 
@@ -36,9 +30,6 @@ namespace WebSiteClothesStore.Models
         public DateTime? NgayDat { get; set; }
 
         public DateTime? NgayGiao { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CTDonDatHang> CTDonDatHangs { get; set; }
 
         public virtual KhachHang KhachHang { get; set; }
     }

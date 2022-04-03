@@ -14,6 +14,8 @@ namespace WebSiteClothesStore.Models
 
         public int? MaDDH { get; set; }
 
+        public int MaSP { get; set; }
+
         [StringLength(50)]
         public string TenSP { get; set; }
 
@@ -23,15 +25,10 @@ namespace WebSiteClothesStore.Models
         public decimal DonGia { get; set; }
 
         public int? MaCTSP { get; set; }
-
         public int? BinhChon { get; set; }
-
-        public int? MaSP { get; set; }
 
         public virtual BangSanPham BangSanPham { get; set; }
 
         public virtual CTSanPham CTSanPham { get; set; }
-
-        public virtual DonDatHang DonDatHang { get; set; }
     }
 }

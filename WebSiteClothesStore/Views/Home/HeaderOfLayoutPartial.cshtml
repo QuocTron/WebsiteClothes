@@ -135,73 +135,69 @@
 
                 @using (Ajax.BeginForm("DangKy", "Home", new { @strURL = Request.Url.ToString() }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" })) // muons chạy được các file view thì phải chạy thông qua controller của nó
                 {
-            <div class="row3">
-                <div class="formRegister">
-                    <div class="loginInformation">
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="taiKhoan">Tên đăng nhập</label>
-                            <input type="text" name="TaiKhoan" id="taiKhoan" class="form-control form-control-lg" />
+                    <div class="formRegister">
+                        <div class="loginInformation">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="taiKhoan">Tên đăng nhập</label>
+                                <input type="text" name="TaiKhoan" id="taiKhoan" class="form-control form-control-lg" />
+
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="matkhau">Mật khẩu </label>
+                                <input type="password" name="MatKhau" id="matkhau" class="form-control form-control-lg" />
+
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="reMatKhau">Nhập lại mật khẩu</label>
+                                <input type="password" name="reMatKhau" id="reMatKhau" class="form-control form-control-lg" />
+                            </div>
 
                         </div>
+                        <div class="personalInfor">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="hoten">Họ tên</label>
+                                <input type="text" name="HoTen" id="hoten" class="form-control form-control-lg" />
+                            </div>
 
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="matkhau">Mật khẩu </label>
-                            <input type="password" name="MatKhau" id="matkhau" class="form-control form-control-lg" />
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="email">Your Email</label>
+                                <input type="email" id="email" name="Email" class="form-control form-control-lg" />
 
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="reMatKhau">Nhập lại mật khẩu</label>
-                            <input type="password" name="reMatKhau" id="reMatKhau" class="form-control form-control-lg" />
-                        </div>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="sdt">Nhập số điện thoại của</label>
+                                <input type="number" id="sdt" name="SDT" class="form-control form-control-lg" />
 
-                    </div>
-                    <div class="personalInfor">
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="hoten">Họ tên</label>
-                            <input type="text" name="HoTen" id="hoten" class="form-control form-control-lg" />
-                        </div>
-
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="email">Your Email</label>
-                            <input type="email" id="email" name="Email" class="form-control form-control-lg" />
-
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="sdt">Nhập số điện thoại của</label>
-                            <input type="number" id="sdt" name="SDT" class="form-control form-control-lg" />
-
-                        </div>
-                        <label class="form-label" for="diaChi">Nhập số địa chỉ</label>
-                        <textarea style="display:block;margin-bottom:10px;" id="diaChi" class="addressClient" name="DiaChi" placeholder="Nhập địa chỉ của bạn" style="width:370px; height:82px;">
+                            </div>
+                            <label class="form-label" for="diaChi">Nhập số địa chỉ</label>
+                            <textarea style="display:block;" id="diaChi" class="addressClient" name="DiaChi" placeholder="Nhập địa chỉ của bạn" style="width:370px; height:82px;">
                             
         
                        </textarea>
-                        <select name="CauHoi">
-                            <option>Shop có đồ đẹp không</option>
-                            <option>Shop có bán mắc không</option>
-                            <option>Shop có có bán nhiều đồ không</option>
-                            <option>Khi nào thì shop giảm giá</option>
-                        </select>
+                            <select name="CauHoi">
+                                <option>Shop có đồ đẹp không</option>
+                                <option>Shop có bán mắc không</option>
+                                <option>Shop có có bán nhiều đồ không</option>
+                                <option>Khi nào thì shop giảm giá</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-check d-flex justify-content-center mb-5">
-                    <input class="form-check-input me-2"
-                           type="checkbox"
-                           value=""
-                           id="form2Example3cg" />
-                    <label class="form-check-label" for="form2Example3g">
-                        I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
-                    </label>
-                </div>
-            </div>
+                    <div class="form-check d-flex justify-content-center mb-5">
+                        <input class="form-check-input me-2"
+                               type="checkbox"
+                               value=""
+                               id="form2Example3cg" />
+                        <label class="form-check-label" for="form2Example3g">
+                            I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                        </label>
+                    </div>
 
-            <div class="footerDK">
-                <div class="d-flex justify-content-center">
-                    <input type="submit" value="Đăng ký" id="btnRegister"style="margin-bottom: 10px; font-weight: bold;">
-                    
-                </div>
-                <button type="button" class="btnFormDangNhap"style="font-weight: bold;">Đăng nhập tại đây</button>
-            </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" value="Đăng ký" id="btnRegister">
+
+                    </div>
+                    <button type="button" class="btnFormDangNhap">Đăng nhập tại đây</button>
                 }
             </div>
             </div>
@@ -217,7 +213,6 @@
         display:flex;
         list-style:none;
     }
-    
     .left-header {
         display: flex;
         justify-content: center;
@@ -231,33 +226,13 @@
     .logoHeader--item:hover{
         color: white;
         background: #23ABF2;
-        border-radius: 3px; 
+        border-radius: 3px;
     }
-    .formLogin{
-        background-color:antiquewhite;
 
-    }
-    
-    .row1 h1 {
-        font-weight: bold;
-        font-style: italic;
-        text-align:center;
-    }
-    .row1 p {
-        font-weight: bold;
-        text-align: center;
-    }
-    .footerDK{
-        margin-top:-30px;
-    }
-    .btn.dis
     .logoHeader h1 {
         margin: 0;
     }
-    .row1 a {
-        font-weight: bold;
-        color:black;
-    }
+
     .search--item {
         height: 30px;
     }
@@ -298,12 +273,7 @@
     .mucluc-item__qr:hover .header_hover {
         display: block;
     }
-    .row3{
-        padding:30px;
-    }
-   .loginInformation{
-       padding-right:30px;
-   }
+
     .header_hover {
         background-color: white;
         position: absolute;
@@ -312,12 +282,7 @@
         display: none;
         z-index:3;
     }
-    
-    .register-form {
-    
-        border-radius: 50px 50px 50px;
-    }
-    
+
     .mucluc {
         list-style: none;
         display: flex;
@@ -386,17 +351,9 @@
     .giohang {
         margin: 0 20px;
     }
-    
-    .btnRegistration {
-        font-weight: bold;
-        color:black;
-    }
-    #btnLogin {
-        font-weight: bold;
-      
-        border-radius: 6px 6px 6px;
-    }
-    
+
+   
+
     .dangnhap {
         margin: 0 12px;
         display: flex;
@@ -404,9 +361,7 @@
         font-size: 20px;
         padding-left: 0
     }
-    .btn{
-        font-weight:bold;
-    }
+
     .search {
         display: flex;
         list-style: none;
@@ -432,13 +387,7 @@
         color: white;
         border: none;
     }
-    .closeForm {
-        font-size: 10px;
-        border-radius: 0px 20px 0px 0px;
-        padding: 10px;
-        right: -1px;
-        top: -1px;
-    }
+
     #popup-login {
         top: 10%;
         left: 0;
@@ -449,12 +398,8 @@
         left: 50%;
         transform: translateX(-50%);
         text-align: center;
-        border: 2px solid black;
-        border-radius: 10% 10% 10% 10%;
-      
-        
     }
-  
+
     .formLogin {
         top: 0;
         position: fixed;
@@ -464,26 +409,14 @@
         z-index: 99;
         display: none;
     }
-    #login-form {
-        border-radius: 20px 20px 20px 20px;
-    }
+
     .userName {
-        padding:5px;
         width: 100%;
         margin-bottom: 10px;
-        border-radius: 15px;
-        border-radius: 15px 15px;
-        border-radius: 15px 15px 15px;
-        border-radius: 15px 15px 15px;
     }
-    
+
     .passWord {
         width: 100%;
-        padding: 5px;
-        border-radius: 15px;
-        border-radius: 15px 15px;
-        border-radius: 15px 15px 15px;
-        border-radius: 15px 15px 15px;
     }
 
     .top_nav {
@@ -520,7 +453,6 @@
     .formRegister{
         display:flex;
     }
-    
     .register-form{
         display:none;
     }

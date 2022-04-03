@@ -32,6 +32,11 @@ namespace WebSiteClothesStore.Models
                 .HasPrecision(19, 4);
 
             modelBuilder.Entity<BangSanPham>()
+                .HasMany(e => e.CTDonDatHangs)
+                .WithRequired(e => e.BangSanPham)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BangSanPham>()
                 .HasMany(e => e.CTPhieuNhaps)
                 .WithRequired(e => e.BangSanPham)
                 .WillCascadeOnDelete(false);

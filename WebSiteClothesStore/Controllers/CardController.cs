@@ -351,11 +351,9 @@ namespace WebSiteClothesStore.Controllers
             foreach(var item in listDetailProduct)
             {
                 BangSanPham productUpdateNumberBuys = db.BangSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP);
-                if(productUpdateNumberBuys!=null)
-                    productUpdateNumberBuys.SoLanMua+=item.SoLuong;
+                productUpdateNumberBuys.SoLanMua+=item.SoLuong;
                 CTSanPham productUpdateCount = db.CTSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP && p.MaCT == item.MaCTSP);
-                if(productUpdateCount!=null)
-                    productUpdateCount.SoLuongTon -= item.SoLuong;
+                productUpdateCount.SoLuongTon -= item.SoLuong;
                 db.SaveChanges();
             }
             return RedirectToAction("ThongBaoDatHang","Card");
