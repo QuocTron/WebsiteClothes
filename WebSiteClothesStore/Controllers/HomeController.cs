@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using WebSiteClothesStore.Models;
 using WebSiteClothesStore.ModelTemp;
 using WebSiteClothesStore.LinqToSQL;
+using System.Net.Mail;
+using System.Text;
 
 namespace WebSiteClothesStore.Controllers
 {
@@ -126,7 +128,56 @@ namespace WebSiteClothesStore.Controllers
             ViewBag.GioHangCSDL = null;
             return RedirectToAction("Index");
         }
+        public ActionResult LayMayKhau(string strURL,FormCollection collection) 
+        {
+            string taiKhoan = collection["TaiKhoan"];
+            string email = collection["Email"];
+            Random rd = new Random();
+            string newPassword="12345";
+            var account = db.ThanhViens.FirstOrDefault(p => p.TaiKhoan == taiKhoan);
+            if (account != null)
+            {
+                for (int i=0; i< 8; i++)
+                {
 
+                    newPassword = string.Concat("%" +Convert.ToString((char)rd.Next(97, 122)) + "%");
+
+                }
+          
+                account.MatKhau = newPassword;
+                account.Email = email;
+
+                db.SaveChanges();
+
+                MailMessage mSG = new MailMessage();
+                AlternateView plainView = AlternateView
+    .CreateAlternateViewFromString("Some plaintext", Encoding.UTF8, "text/plain");
+                mSG.AlternateViews.Add(plainView);
+                mSG.From = new MailAddress("quoctron.200901@gmail.com", "Thông báo nhận lại mail từ Slider");
+                mSG.To.Add("quoctron2009@gmail.com"); // thêm địa chỉ mail người nhận
+                mSG.Subject = "Mật khẩu vừa cập nhật, vui lòng đăng nhập lại";// Thêm tiêu đề mail;
+                string style = "background-color:aqua; color:red;";
+                string test = string.Format(@"""{0}""", style);
+                string htmlText = $"Mật khẩu của bạn <p style={style}> "+ newPassword +"</p>";
+
+                AlternateView htmlView =
+                    AlternateView.CreateAlternateViewFromString(htmlText, Encoding.UTF8, "text/html");
+
+                mSG.AlternateViews.Add(htmlView);
+                mSG.Body = htmlText;
+                mSG.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.Credentials = new System.Net.NetworkCredential("quoctron.200901@gmail.com","Mwg@0376951201");
+                smtp.Send(mSG);// gửi
+                mSG = null;
+
+            }
+            return RedirectToAction("Index");
+        }
         public ActionResult DangKy(FormCollection collection , string strURL)
         {
             string taiKhoan = collection["TaiKhoan"];
