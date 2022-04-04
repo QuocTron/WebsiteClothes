@@ -20,7 +20,7 @@ namespace WebSiteClothesStore.Models
         public int SoLuong { get; set; }
 
         [Column(TypeName = "money")]
-        public decimal? DonGia { get; set; }
+        public decimal DonGia { get; set; }
 
         public int? BinhChon { get; set; }
 

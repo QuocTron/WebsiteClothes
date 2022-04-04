@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebSiteClothesStore.Models;
+using System.IO;
 namespace WebSiteClothesStore.Controllers
 {
     public class BangSanPhamController : Controller
@@ -12,11 +13,19 @@ namespace WebSiteClothesStore.Controllers
         // GET: BangSanPham
         public ActionResult ListSanPham()
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             var All_sp = context.BangSanPhams;
             return View(All_sp);
         }
         public ActionResult Edit(int? id)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             if (id == null)
             {
                 return HttpNotFound();
@@ -31,6 +40,10 @@ namespace WebSiteClothesStore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BangSanPham bsp)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -68,43 +81,80 @@ namespace WebSiteClothesStore.Controllers
             {
                 return "";
             }
-            file.SaveAs(Server.MapPath("~/Content/images/" + file.FileName));
-            return "/Content/images/" + file.FileName;
+            string newFile = "/Content/images/" + file.FileName;
+
+            if (Directory.Exists(newFile) != true)
+            {
+                file.SaveAs(Server.MapPath("~/Content/images/" + file.FileName));
+            }
+            return newFile;
         }
 
         public ActionResult Create()
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             var listCategory = context.LoaiSanPhams;
             ViewBag.ListLoai = listCategory;
             return View();
         }
         [HttpPost]
-        public ActionResult Create(BangSanPham bspCreate)
+        public ActionResult Create(FormCollection collection)
         {
-            if (ModelState.IsValid)
+            if (Session["TaiKhoanAdmin"] == null)
             {
-
-                BangSanPham bsp = bspCreate;
-               
-                context.BangSanPhams.Add(bsp);
-                context.SaveChanges();
-
-                return RedirectToAction("ListSanPham");
+                return RedirectToAction("DangNhap", "Admin");
             }
-            else
+            var tenSP = collection["TenSP"];
+            var donGia = collection["Dongia"];
+            var MoTa = collection["MoTa"];
+            var giamGia = collection["GiamGia"];
+            var maLoai = collection["LoaiSanPham"];
+            var anh1 = collection["Anh1"];
+            var anh2 = collection["Anh2"];
+            var anh3 = collection["Anh3"];
+            var anh4 = collection["Anh4"];
+            var anh5 = collection["Anh5"];
+
+            BangSanPham bangSanPham = new BangSanPham()
             {
-                // không được
-                return View(new BangSanPham());
-            }
+                TenSP=tenSP,
+                Dongia= decimal.Parse(donGia),
+                MoTa = MoTa,
+                GiamGia=double.Parse(giamGia),
+                MaLoai=int.Parse(maLoai),
+                Anh1=anh1,
+                Anh2=anh2,
+                Anh3=anh3,
+                Anh4=anh4,
+                Anh5=anh5
+
+            };
+            context.BangSanPhams.Add(bangSanPham);
+            context.SaveChanges();
+
+            // không được
+            return RedirectToAction("ListSanPham");
+
         }
         public ActionResult Delete(int id)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             var D_sp = context.BangSanPhams.FirstOrDefault(m => m.MaSP == id);
             return View(D_sp);
         }
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             /*if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

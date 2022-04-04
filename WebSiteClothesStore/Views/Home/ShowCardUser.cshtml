@@ -81,6 +81,24 @@
                         @db.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(p => p.DonGia)
                     </td>
                     <td>
+
+                        @if (item.DaThanhToan != true)
+                        {
+                            if (item.DaHuy != true)
+                            {
+                                <a href="@Url.Action("DestroyCard","Home" ,new {@maDH = item.MaDDH })">
+                                    Hủy đơn hàng
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("ReOrderCard","Home" ,new {@maDH = item.MaDDH })">
+                                    Đặt lại đơn
+                                </a>
+                            }
+
+                        }
+
                         <a href="@Url.Action("DetailCard","Home" ,new {@maDH = item.MaDDH })">
                             Xem chi tiết đơn hàng
                         </a>

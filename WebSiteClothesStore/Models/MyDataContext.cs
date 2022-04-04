@@ -12,6 +12,7 @@ namespace WebSiteClothesStore.Models
         {
         }
 
+        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<BangPhieuNhap> BangPhieuNhaps { get; set; }
         public virtual DbSet<BangSanPham> BangSanPhams { get; set; }
         public virtual DbSet<CTDonDatHang> CTDonDatHangs { get; set; }
@@ -27,17 +28,20 @@ namespace WebSiteClothesStore.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Admin>()
+                .Property(e => e.TaiKhoan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admin>()
+                .Property(e => e.MatKhau)
+                .IsUnicode(false);
+
             modelBuilder.Entity<BangSanPham>()
                 .Property(e => e.Dongia)
                 .HasPrecision(19, 4);
 
             modelBuilder.Entity<BangSanPham>()
                 .HasMany(e => e.CTPhieuNhaps)
-                .WithRequired(e => e.BangSanPham)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<BangSanPham>()
-                .HasMany(e => e.CTSanPhams)
                 .WithRequired(e => e.BangSanPham)
                 .WillCascadeOnDelete(false);
 
@@ -58,11 +62,6 @@ namespace WebSiteClothesStore.Models
                 .WithOptional(e => e.CTSanPham)
                 .HasForeignKey(e => e.MaCTSP);
 
-            modelBuilder.Entity<LoaiSanPham>()
-                .HasMany(e => e.BangSanPhams)
-                .WithRequired(e => e.LoaiSanPham)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<LoaiTV>()
                 .HasMany(e => e.ThanhViens)
                 .WithRequired(e => e.LoaiTV)
@@ -71,16 +70,6 @@ namespace WebSiteClothesStore.Models
             modelBuilder.Entity<NhaCC>()
                 .HasMany(e => e.BangPhieuNhaps)
                 .WithRequired(e => e.NhaCC)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<NhaCC>()
-                .HasMany(e => e.BangSanPhams)
-                .WithRequired(e => e.NhaCC)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<NhaSX>()
-                .HasMany(e => e.BangSanPhams)
-                .WithRequired(e => e.NhaSX)
                 .WillCascadeOnDelete(false);
         }
     }

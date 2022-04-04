@@ -182,6 +182,20 @@ namespace WebSiteClothesStore.Controllers
             var listCard = db.CTDonDatHangs.Where(p => p.MaDDH == maDH);
             return View(listCard);
         }
+        public ActionResult DestroyCard(int maDH)
+        {
+            var donHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDH);
+            donHang.DaHuy =true;
+            db.SaveChanges();
+            return RedirectToAction("ShowCardUser");
+        }
+        public ActionResult ReOrderCard(int maDH)
+        {
+            var donHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDH);
+            donHang.DaHuy = false;
+            db.SaveChanges();
+            return RedirectToAction("ShowCardUser");
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

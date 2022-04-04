@@ -299,7 +299,7 @@ namespace WebSiteClothesStore.Controllers
                         cardOdered.MaKH = client.MaKH;
                         cardOdered.NgayDat = DateTime.Now;
                         cardOdered.NgayGiao = DateTime.Now.AddDays(4);
-                        cardOdered.TinhTrangDDH = "Chưa Giao";
+                        cardOdered.TinhTrangDDH = "Đang Giao";
                         cardOdered.DaThanhToan = false;
                         cardOdered.UuDai = 0;
                         cardOdered.DaDat = true;

@@ -23,17 +23,116 @@
     <link href="~/Content/css/Product.css" rel="stylesheet" />
 
 </head>
+
+@using WebSiteClothesStore.Models
+@{
+    MydataContext context = new MydataContext();
+}
 <body>
     <header>
-        @Html.Partial("~/Views/Home/HeaderOfLayoutPartial.cshtml")
+        @Html.Partial("~/Views/Home/HeaferLayoutAdminPartial.cshtml")
         <!-- //header container -->
     </header>
-    <div class="container container-products">
-            @RenderBody()
-    </div>
-   
 
-  
+    <div class="title-update">
+       
+        <div class="col-md-3 market-update-gd">
+            <a href="@Url.Action("ListDanhMuc","DanhMuc")">
+                <div class="market-update-block clr-block-2">
+                    <div class="col-md-4 market-update-right">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="col-md-8 market-update-left">
+                        <h4>Danh mục sản phẩm</h4>
+                        <h3>(@context.LoaiSanPhams.Count()) loại sản phẩm</h3>
+                        <p>(@context.LoaiSanPhams.Sum(p => p.BangSanPhams.Count())) Sản phẩm</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </a>
+        </div>
+        
+
+        
+        <div class="col-md-3 market-update-gd">
+            <a href="@Url.Action("ListSanPham","BangSanPham")">
+                <div class="market-update-block clr-block-2">
+                    <div class="col-md-4 market-update-right">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="col-md-8 market-update-left">
+                        <h4>Sản phẩm</h4>
+                        <h3>(@context.BangSanPhams.Count())Sản phẩm</h3>
+                        <p>(@context.CTSanPhams.Sum(p => p.SoLuongTon)) Số lượng còn</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </a>
+        </div>
+       
+
+
+      
+        <div class="col-md-3 market-update-gd">
+            <a href="@Url.Action("")">
+                <div class="market-update-block clr-block-2">
+                    <div class="col-md-4 market-update-right">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="col-md-8 market-update-left">
+                        <h4>Chi tiết sản phẩm</h4>
+                        <h3>(@context.CTSanPhams.Count()) Chi tiết sản phẩm</h3>
+                        <p>(@context.CTSanPhams.Sum(p => p.SoLuongTon)) Số lượng còn</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </a>
+        </div>
+       
+
+        
+        <div class="col-md-3 market-update-gd">
+            <a href="@Url.Action("ListDonHangDaGiao","DonDatHang")">
+                <div class="market-update-block clr-block-2">
+                    <div class="col-md-4 market-update-right">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="col-md-8 market-update-left">
+                        <h4>Đơn đặt hàng</h4>
+                        <h3>(@context.DonDatHangs.Count()) đơn hàng</h3>
+                        <p>(@context.DonDatHangs.Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </a>
+        </div>
+    
+       
+        <div class="col-md-3 market-update-gd">
+            <a href="@Url.Action("ListDonHangDangGiao","DonDatHang")">
+                <div class="market-update-block clr-block-2">
+                    <div class="col-md-4 market-update-right">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="col-md-8 market-update-left">
+                        <h4>Đơn đặt hàng</h4>
+                        <h3>(@context.DonDatHangs.Count()) đơn hàng</h3>
+                        <p>(@context.DonDatHangs.Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </a>
+        </div>
+       
+
+    </div>
+
+    <div class="container container-products">
+        @RenderBody()
+    </div>
+
+
+
     <hr />
     <footer>
     </footer>
@@ -48,3 +147,30 @@
 
 @RenderSection("upload", required: false)
 
+<style>
+    .market-update-gd a{
+        width:100%;
+    }
+    .title-update {
+        margin-top: 30px;
+        width: 100%;
+        height: 200px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .market-update-gd {
+        width: 18%;
+        height: 200px;
+        border: 2px solid black;
+        display: flex;
+    }
+    .market-update-block{
+        width:100%;
+    }
+    .container-products {
+        margin-top: 100px;
+    }
+    .contentCreatePro{
+
+    }
+</style>

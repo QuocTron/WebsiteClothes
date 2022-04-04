@@ -135,9 +135,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BangSanPhamController.cs" />
     <Compile Include="Controllers\CardController.cs" />
     <Compile Include="Controllers\DanhMucController.cs" />
+    <Compile Include="Controllers\DonDatHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Models\NhaSX.cs" />
     <Compile Include="Models\ThanhVien.cs" />
     <Compile Include="ModelTemp\ItemCardTemp.cs" />
+    <Compile Include="Models\Admin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -171,8 +174,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\HeaderOfLayoutPartial.css" />
+    <Content Include="Content\css\monthly.css" />
+    <Content Include="Content\css\morris.css" />
     <Content Include="Content\css\Product.css" />
     <Content Include="Content\css\ProductLayout.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\images\france-tower.jpg" />
     <Content Include="Content\js\HeaderOfLayoutPartial.js" />
     <Content Include="Content\images\AoKhoac.jpg" />
@@ -256,6 +262,12 @@
     <Content Include="Views\BangSanPham\Create.cshtml" />
     <Content Include="Views\BangSanPham\Delete.cshtml" />
     <Content Include="Views\HomeLayout\ProductLayoutAdmin.cshtml" />
+    <Content Include="Views\HomeLayout\LayoutProductAdmin.cshtml" />
+    <Content Include="Views\DonDatHang\ListDonHangDaGiao.cshtml" />
+    <Content Include="Views\DonDatHang\ListDonHangDangGiao.cshtml" />
+    <Content Include="Views\Home\HeaferLayoutAdminPartial.cshtml" />
+    <Content Include="Views\Admin\DangNhap.cshtml" />
+    <Content Include="Views\DonDatHang\DetailDHH.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

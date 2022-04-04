@@ -13,11 +13,19 @@ namespace WebSiteClothesStore.Controllers
         // GET: DanhMuc
         public ActionResult ListDanhMuc()
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             var All_dm = context.LoaiSanPhams;
             return View(All_dm);
         }
         public ActionResult Edit(int? id)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             if (id == null)
             {
                 return HttpNotFound();
@@ -32,6 +40,10 @@ namespace WebSiteClothesStore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(LoaiSanPham lsp)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -58,6 +70,7 @@ namespace WebSiteClothesStore.Controllers
         }
         public string ProcessUpload(HttpPostedFileBase file)
         {
+           
             if (file == null)
             {
                 return "";
@@ -67,12 +80,20 @@ namespace WebSiteClothesStore.Controllers
         }
         public ActionResult Delete(int id)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             var D_dm = context.LoaiSanPhams.FirstOrDefault(m => m.MaLoai == id);
             return View(D_dm);
         }
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             /*if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -90,6 +111,10 @@ namespace WebSiteClothesStore.Controllers
         }
         public ActionResult Create(LoaiSanPham lspCreate)
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             if (ModelState.IsValid)
             {
 
