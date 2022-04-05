@@ -32,7 +32,9 @@ namespace WebSiteClothesStore.Controllers
             // truy vấn vào bảng sản phẩm để có thể tham chiếu vào các thuộc tính khóa ngoại khác không cần truy vấn nhìu bảng
             return PartialView(listSP); // dùng PartialView khi chỉ tả về 1 phần nhỏ trong layout
         }
-        // xây dựng action đang nhập
+        // xây dựng action
+        // đang nhập
+    
         [HttpPost]
         public ActionResult DangNhap(string strURL, FormCollection f)
         {

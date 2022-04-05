@@ -138,10 +138,12 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BangSanPhamController.cs" />
     <Compile Include="Controllers\CardController.cs" />
+    <Compile Include="Controllers\CTSanPhamController.cs" />
     <Compile Include="Controllers\DanhMucController.cs" />
     <Compile Include="Controllers\DonDatHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ThanhVienController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,6 +270,14 @@
     <Content Include="Views\Home\HeaferLayoutAdminPartial.cshtml" />
     <Content Include="Views\Admin\DangNhap.cshtml" />
     <Content Include="Views\DonDatHang\DetailDHH.cshtml" />
+    <Content Include="Views\CTSanPham\ListCTSanPham.cshtml" />
+    <Content Include="Views\CTSanPham\Edit.cshtml" />
+    <Content Include="Views\CTSanPham\Details.cshtml" />
+    <Content Include="Views\CTSanPham\Delete.cshtml" />
+    <Content Include="Views\ThanhVien\ListTV.cshtml" />
+    <Content Include="Views\ThanhVien\Edit.cshtml" />
+    <Content Include="Views\ThanhVien\Delete.cshtml" />
+    <Content Include="Views\ThanhVien\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
