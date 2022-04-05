@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebSiteClothesStore.Models;
@@ -279,6 +281,10 @@ namespace WebSiteClothesStore.Controllers
         public ActionResult OrderProducts(KhachHang kh)
         {
             int maDH=0;
+            string email = "";
+            DateTime? dateOrder = DateTime.Now;
+            Session["KhachHang"] = kh;
+            double tongGiaTriDonHang = 0;
             if (Session["GioHang"] == null && Session["GioHangTam"]==null)
             {
                 return RedirectToAction("Index", "HomeWeb");
@@ -292,6 +298,8 @@ namespace WebSiteClothesStore.Controllers
                     client.TenKH = tv.HoTen;
                     client.DiaChi = tv.DiaChi;
                     client.SDT = tv.SDT;
+                    client.Email = tv.Email;
+                    email = tv.Email;
                     db.SaveChanges();
                     var cardOdered = db.DonDatHangs.FirstOrDefault(p => p.MaKH == client.MaKH && p.DaDat == false);
                     if (cardOdered != null)
@@ -302,9 +310,11 @@ namespace WebSiteClothesStore.Controllers
                         cardOdered.TinhTrangDDH = "Đang Giao";
                         cardOdered.DaThanhToan = false;
                         cardOdered.UuDai = 0;
-                        cardOdered.DaDat = true;
+                        //cardOdered.DaDat = true;
                         cardOdered.DaHuy = false;
                         maDH = cardOdered.MaDDH;
+                        dateOrder = cardOdered.NgayDat;
+                        tongGiaTriDonHang = (double)db.CTDonDatHangs.Where(p => p.MaDDH == maDH).Sum(p => p.SoLuong * p.DonGia);
                         db.SaveChanges();
                         Session["GioHang"] = null;
                         ViewBag.GioHangCSDL = null;
@@ -315,6 +325,7 @@ namespace WebSiteClothesStore.Controllers
             {
                 KhachHang newClient = new KhachHang();
                 newClient = kh;
+                email = kh.Email;
                 db.KhachHangs.Add(newClient);
                 db.SaveChanges();
 
@@ -327,7 +338,7 @@ namespace WebSiteClothesStore.Controllers
                 donDH.DaThanhToan = false;
                 donDH.UuDai = 0;
                 donDH.DaHuy = false;
-                donDH.DaDat = true;
+                //donDH.DaDat = true;
                 db.DonDatHangs.Add(donDH);
                 db.SaveChanges();
                 List<ItemCardTemp> listGH = GetGioHang(); // nhận giá trị từ session
@@ -343,23 +354,87 @@ namespace WebSiteClothesStore.Controllers
                     db.CTDonDatHangs.Add(ctddh);
                     db.SaveChanges();
                 }
+                tongGiaTriDonHang = listGH.Sum(p => p.SoLuong * p.DonGia);
+                dateOrder = donDH.NgayDat;
                 maDH = donDH.MaDDH;
                 Session["GioHangTam"] = null;
                 ViewBag.GioHangTam = null;
+
+            }
+            //List<CTDonDatHang> listDetailProduct = db.CTDonDatHangs.Where(p => p.MaDDH == maDH).ToList();
+            //foreach(var item in listDetailProduct)
+            //{
+            //    BangSanPham productUpdateNumberBuys = db.BangSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP);
+            //    if(productUpdateNumberBuys!=null)
+            //        productUpdateNumberBuys.SoLanMua+=item.SoLuong;
+            //    CTSanPham productUpdateCount = db.CTSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP && p.MaCT == item.MaCTSP);
+            //    if(productUpdateCount!=null)
+            //        productUpdateCount.SoLuongTon -= item.SoLuong;
+            //    db.SaveChanges();
+            //}
+
+            MailMessage mSG = new MailMessage();
+            AlternateView plainView = AlternateView
+.CreateAlternateViewFromString("Some plaintext", Encoding.UTF8, "text/plain");
+            mSG.AlternateViews.Add(plainView);
+            mSG.From = new MailAddress(MyEmail.name, "Thông báo nhận lại mail từ Slider");
+            mSG.To.Add(email); // thêm địa chỉ mail người nhận
+            mSG.Subject = "Mật khẩu vừa cập nhật, vui lòng đăng nhập lại";// Thêm tiêu đề mail;
+            string tenKH = kh.TenKH;
+
+            string style = " color:black; font-size:20px; font-weight:900; background-color:greenyellow; padding:10px 50px; text-decoration:none; border-radius:20px;";
+            string test = string.Format(@"""{0}""", style);
+            string link = string.Format(@"""{0}""", "https://localhost:44331/Card/ConfirmCard?maDH="+maDH+"");
+            string sttykeTheA = string.Format(@"""{0}""", "b");
+            string displayInline = string.Format(@"""{0}""", "display:inline-block;");
+            //padding:10px 20px; background - color:greenyellow;text - decoration:none;border - radius:20px;color: black; font - size:16px;font - weight:900; 
+            string htmlText = $"<b style={ displayInline}>Đơn hàng của (anh/chị) :</b> <h3 style={ displayInline}>{tenKH}</h3> <b style={ displayInline}>Có giá trị là  :</b><h3 style={ displayInline}>{tongGiaTriDonHang.ToString("#,##")} VNĐ </h3> <b style={ displayInline}> được đặt vào ngày : </b><h3 style={ displayInline}>{dateOrder}</h3>  " +
+                $"<a href={link} style={test} target='_blank'>Xác nhận đơn hàng </a>";
+
+            AlternateView htmlView =
+                AlternateView.CreateAlternateViewFromString(htmlText, Encoding.UTF8, "text/html");
+
+            mSG.AlternateViews.Add(htmlView);
+            mSG.Body = htmlText;
+            mSG.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.EnableSsl = true;
+            smtp.Credentials = new System.Net.NetworkCredential(MyEmail.name, MyEmail.password);
+            smtp.Send(mSG);// gửi
+            mSG = null;
+            return RedirectToAction("ShowCardUser", "Home");
+        }
+        public ActionResult ConfirmCard(int maDH)
+        {
+            if (maDH == 0)
+            {
+                return RedirectToAction("Index", "HomeWeb");
             }
             List<CTDonDatHang> listDetailProduct = db.CTDonDatHangs.Where(p => p.MaDDH == maDH).ToList();
-            foreach(var item in listDetailProduct)
+            if (listDetailProduct.Count() == 0)
+            {
+                return RedirectToAction("Index", "HomeWeb");
+            }
+            DonDatHang donDatHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDH);
+            if (donDatHang != null)
+            {
+                donDatHang.DaDat =true;
+                donDatHang.NgayGiao = DateTime.Now.AddDays(4);
+                db.SaveChanges();
+            }
+            foreach (var item in listDetailProduct)
             {
                 BangSanPham productUpdateNumberBuys = db.BangSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP);
-                if(productUpdateNumberBuys!=null)
-                    productUpdateNumberBuys.SoLanMua+=item.SoLuong;
+                if (productUpdateNumberBuys != null)
+                    productUpdateNumberBuys.SoLanMua += item.SoLuong;
                 CTSanPham productUpdateCount = db.CTSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP && p.MaCT == item.MaCTSP);
-                if(productUpdateCount!=null)
+                if (productUpdateCount != null)
                     productUpdateCount.SoLuongTon -= item.SoLuong;
                 db.SaveChanges();
             }
-            return RedirectToAction("ThongBaoDatHang","Card");
-
+            return RedirectToAction("ThongBaoDatHang", "Card");
         }
        public ActionResult ThongBaoDatHang()
         {
