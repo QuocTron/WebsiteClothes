@@ -75,60 +75,63 @@
 <span class="titlePage">
     Trang @(Model.PageCount<Model.PageNumber? 0: Model.PageNumber)/@Model.PageCount
 </span>
-    <div class="dlink">
+<div class="dlink">
 
-        @Html.PagedListPager(Model, page => Url.Action("ProductFollowIDCategory", new { page = page, @idCategory = ViewBag.MaLoaiSP }))
-        @*tách sản phẩm ra nhiều trang  *@
-    </div>
+    @Html.PagedListPager(Model, page => Url.Action("ProductFollowIDCategory", new { page = page, @idCategory = ViewBag.MaLoaiSP }))
+    @*tách sản phẩm ra nhiều trang  *@
+</div>
 
 
-    <style>
-        .title-category {
-            margin-top: 25px;
-            margin-left: 25px;
+<style>
+    .title-category {
+        margin-top: 25px;
+        margin-left: 25px;
+        font-weight: bold;
+    }
+
+    .content-Products {
+        display: flex;
+        margin-top: 10px;
+    }
+
+        .content-Products:before {
+            content: "";
+            position: absolute;
+            top: 50px;
+            left: 38px;
+            height: 2px;
+            width: 90%;
+            background-color: black;
         }
 
-        .content-Products {
-            display: flex;
-            margin-top: 10px;
+    .product-small {
+        margin-left: 10px;
+    }
+
+    .dlink {
+        display: block;
+        text-align: center;
+    }
+
+    .titlePage {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .pagination {
+    }
+
+    .pagination {
+    }
+
+        .pagination .active a {
+            background-color: black;
+            color: white;
         }
 
-            .content-Products:before {
-                content: "";
-                position: absolute;
-                top: 50px;
-                left: 38px;
-                height: 2px;
-                width: 90%;
-                background-color: black;
-            }
-
-        .product-small {
-            margin-left: 10px;
+        .pagination li a {
+            margin: 0 10px;
+            border: solid 1px gray;
         }
-
-        .dlink {
-            display: block;
-            text-align: center;
-        }
-        .titlePage {
-            font-size: 16px;
-            font-weight: 700;
-        }
-        .pagination {
-        }
-
-        .pagination {
-        }
-
-            .pagination .active a {
-                background-color: black;
-                color: white;
-            }
-
-            .pagination li a {
-                margin: 0 10px;
-                border: solid 1px gray;
-            }
-    </style>
+</style>
 
