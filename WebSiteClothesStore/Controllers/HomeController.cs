@@ -133,14 +133,15 @@ namespace WebSiteClothesStore.Controllers
             string taiKhoan = collection["TaiKhoan"];
             string email = collection["Email"];
             Random rd = new Random();
-            string newPassword="12345";
+            Random ranDom = new Random();
+            string newPassword="";
             var account = db.ThanhViens.FirstOrDefault(p => p.TaiKhoan == taiKhoan);
             if (account != null)
             {
-                for (int i=0; i< 8; i++)
+                for (int i=0; i< 4; i++)
                 {
 
-                    newPassword = string.Concat("%" +Convert.ToString((char)rd.Next(97, 122)) + "%");
+                    newPassword += Convert.ToString((char)rd.Next(97, 122))+ ranDom.Next(0,9);
 
                 }
           
@@ -153,12 +154,12 @@ namespace WebSiteClothesStore.Controllers
                 AlternateView plainView = AlternateView
     .CreateAlternateViewFromString("Some plaintext", Encoding.UTF8, "text/plain");
                 mSG.AlternateViews.Add(plainView);
-                mSG.From = new MailAddress("quoctron.200901@gmail.com", "Thông báo nhận lại mail từ Slider");
-                mSG.To.Add("quoctron2009@gmail.com"); // thêm địa chỉ mail người nhận
+                mSG.From = new MailAddress(MyEmail.name, "Thông báo nhận lại mail từ Slider");
+                mSG.To.Add(email); // thêm địa chỉ mail người nhận
                 mSG.Subject = "Mật khẩu vừa cập nhật, vui lòng đăng nhập lại";// Thêm tiêu đề mail;
-                string style = "background-color:aqua; color:red;";
+                string style = "color:red; font-size:20px; font-weight:700;";
                 string test = string.Format(@"""{0}""", style);
-                string htmlText = $"Mật khẩu của bạn <p style={style}> "+ newPassword +"</p>";
+                string htmlText = $"<b>Mật khẩu mới của bạn là:</b> <span style={test}> "+ newPassword +"</span>";
 
                 AlternateView htmlView =
                     AlternateView.CreateAlternateViewFromString(htmlText, Encoding.UTF8, "text/html");
@@ -171,7 +172,7 @@ namespace WebSiteClothesStore.Controllers
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 587;
                 smtp.EnableSsl = true;
-                smtp.Credentials = new System.Net.NetworkCredential("quoctron.200901@gmail.com","Mwg@0376951201");
+                smtp.Credentials = new System.Net.NetworkCredential(MyEmail.name,MyEmail.password);
                 smtp.Send(mSG);// gửi
                 mSG = null;
 
