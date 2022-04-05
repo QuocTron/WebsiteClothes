@@ -95,7 +95,7 @@
             @{
                 var tongTienDaThanhToan = context.CTDonDatHangs.Where(p => p.DonDatHang.DaThanhToan == false && p.DonDatHang.DaDat == true).Sum(p => p.DonGia * p.SoLuong);
             }
-            Tổng số tiền đã thanh toán : @tongTienDaThanhToan.ToString("#,##") VNĐ
+            Tổng số tiền chưa thanh toán : @tongTienDaThanhToan.ToString("#,##") VNĐ
         </td>
     </tr>
 </table>

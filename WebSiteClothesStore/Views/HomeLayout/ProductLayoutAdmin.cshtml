@@ -74,7 +74,7 @@
 
       
         <div class="col-md-3 market-update-gd">
-            <a href="@Url.Action("")">
+            <a href="@Url.Action("ListCTSanPham","CTSanPham")">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-4 market-update-right">
                         <i class="fa fa-eye"> </i>
@@ -98,9 +98,9 @@
                         <i class="fa fa-eye"> </i>
                     </div>
                     <div class="col-md-8 market-update-left">
-                        <h4>Đơn đặt hàng</h4>
-                        <h3>(@context.DonDatHangs.Count()) đơn hàng</h3>
-                        <p>(@context.DonDatHangs.Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
+                        <h4>Đơn hàng đã thanh toán</h4>
+                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan == true).Count()) đơn hàng</h3>
+                        <p>(@context.DonDatHangs.Where(n=>n.DaThanhToan==true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -115,9 +115,9 @@
                         <i class="fa fa-eye"> </i>
                     </div>
                     <div class="col-md-8 market-update-left">
-                        <h4>Đơn đặt hàng</h4>
-                        <h3>(@context.DonDatHangs.Count()) đơn hàng</h3>
-                        <p>(@context.DonDatHangs.Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
+                        <h4>Đơn hàng chưa thanh toán</h4>
+                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Count()) đơn hàng</h3>
+                        <p>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
