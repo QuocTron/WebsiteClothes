@@ -168,7 +168,6 @@
     <Compile Include="Models\ThanhVien.cs" />
     <Compile Include="ModelTemp\ItemCardTemp.cs" />
     <Compile Include="Models\Admin.cs" />
-    <Compile Include="MyEmail\MyEmail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

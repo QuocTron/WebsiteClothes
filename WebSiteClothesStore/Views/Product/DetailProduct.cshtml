@@ -16,25 +16,41 @@
         <div class="detailProduct">
 
             <div class="imageProduct">
-                <img class="imageMain" src="@product.Anh1" />
+                <div class="allImage">
+                    <img class="imageMain" width:100%;
+            height:500px; src="@product.Anh1" />
+                    <img class="imageMain" width:100%;
+            height:500px; src="@product.Anh2" />
+                    <img class="imageMain" width:100%;
+            height:500px; src="@product.Anh3" />
+                    <img class="imageMain"width:100%;
+            height:500px; src="@product.Anh4" />
+                    <img class="imageMain"width:100%;
+            height:500px; src="@product.Anh5" />
+                </div>
+                
                 <div class="box-imageExtra">
                     <img class="imageExtra" src="@product.Anh1" />
                     <img class="imageExtra" src="@product.Anh2" />
                     <img class="imageExtra" src="@product.Anh3" />
+                    <img class="imageExtra" src="@product.Anh4" />
+                    <img class="imageExtra" src="@product.Anh5" />
                 </div>
             </div>
             <div class="contentProduct">
 
-                <span>Tên sản phẩm:</span>
-                @Html.DisplayFor(model => product.TenSP)
+                <span class="title-detail-pro">Tên sản phẩm:</span>
+                <span class="content-detail-pro"> @Html.DisplayFor(model => product.TenSP)</span>
 
-                <span>Tên nhà sản xuất: </span>
-                @Html.DisplayFor(model => product.NhaSX.TenNSX)
 
-                <span>Loại sản phẩm: </span>
+                <span class="title-detail-pro">Tên nhà sản xuất: </span>
+                <span class="content-detail-pro"> @Html.DisplayFor(model => product.NhaSX.TenNSX)</span>
+
+
+                <span class="title-detail-pro">Loại sản phẩm: </span>
 
                 @Html.DisplayFor(model => product.LoaiSanPham.TenLoai)
-              
+
                 @if (product.CTSanPhams.Sum(p => p.SoLuongTon) == 0)
                 {
                     <span class="inventory-product">Hết hàng</span>
@@ -50,16 +66,16 @@
                     <span class="discount-product">- @product.GiamGia %</span>
                     <span class="price">
 
-                        <span>Đơn giá</span>
+                        <span class="title-detail-pro">Đơn giá</span>
                         <del style="margin-right:10px;">
                             <span class="woocommerce-Price-amount amount">
                                 @product.Dongia.ToString("#,##")
-                                <span class="woocommerce-Price-currencySymbol">đ</span>
+                                <span class="woocommerce-Price-currencySymbol price-pro">đ</span>
                             </span>
                         </del>
 
                         <ins>
-                            <span class="woocommerce-Price-amount amount">
+                            <span class="woocommerce-Price-amount amount price-pro">
                                 @newPrice.ToString("#,##")
                                 <span class="woocommerce-Price-currencySymbol">đ</span>
                             </span>
@@ -68,22 +84,26 @@
                 }
                 else
                 {
-                    <span>Đơn giá: </span>
+                    <span class="title-detail-pro">Đơn giá: </span>
 
-                    <span class="woocommerce-Price-amount amount">
+                    <span class="woocommerce-Price-amount amount price-pro">
                         @product.Dongia.ToString("#,##")
                         <span class="woocommerce-Price-currencySymbol">đ</span>
                     </span>
                 }
 
-                <span>Lượt xem: </span>
-                @Html.DisplayFor(model => product.LuotXem)
-                <span>Lượt chọn: </span>
-                @Html.DisplayFor(model => product.LuotBinhChon)
-                <span>Lượt bình luận: </span>
-                @Html.DisplayFor(model => product.LuotBInhLuan)
-                <span>Số lần mua: </span>
-                @Html.DisplayFor(model => product.SoLanMua)
+                <span class="title-detail-pro">Lượt xem: </span>
+                <span class="content-detail-pro">  @Html.DisplayFor(model => product.LuotXem)</span>
+
+                <span class="title-detail-pro">Lượt chọn: </span>
+                <span class="content-detail-pro">  @Html.DisplayFor(model => product.LuotBinhChon)</span>
+                
+                <span class="title-detail-pro">Lượt bình luận: </span>
+                <span class="content-detail-pro">  @Html.DisplayFor(model => product.LuotBInhLuan)</span>
+                
+                <span class="title-detail-pro">Số lần mua: </span>
+                <span class="content-detail-pro">  @Html.DisplayFor(model => product.SoLanMua)</span>
+                
 
                 @*@using (Ajax.BeginForm("AddProCard", "Card" ,new { @maSP = product.MaSP }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "totalThayThe", InsertionMode = InsertionMode.Replace,}))
         {*@
@@ -107,7 +127,7 @@
                         <input type="submit" id="orderPro" data-id="@product.MaSP" value="Thêm giỏ hàng" />
                     }
                 </div>
-               
+
                 <span>Mô tả</span>
                 @Html.DisplayFor(model => product.MoTa)
 
@@ -186,6 +206,7 @@
     <style>
         .detailProduct {
             display: flex;
+            position:relative;
         }
 
         .countBuy {
@@ -200,24 +221,29 @@
 
         img.imageMain {
             width: 100%;
+            height:800px;
         }
 
         img.imageExtra {
             width: 13%;
             border: 1px solid black;
+            flex: 1;
+            /* flex-grow: 1; nó luôn giản ra  */
+            /* flex-shrink: 0;không cho nó co lại */
+            /* flex-basis: 100%; luôn luôn ở full */
         }
 
         .box-imageExtra {
             border: 2px solid black;
             height: 60px;
-            width: 100%;
+            width: 44%;
             display: flex;
             justify-content: space-evenly;
             margin-top: 10px;
         }
-
         .imageProduct {
             width: 50%;
+            overflow: hidden;
         }
 
         .contentProduct {
@@ -245,15 +271,88 @@
         .sizeProduct{
             display:flex;
         }
+        .inventory-product {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 50%;
+        }
         #orderPro.enable {
+        }
+        .allImage {
+            display: flex;
+            position: relative;
+            transition: transform 0.25s linear;
+            padding: 0;
+            width: 100%;
+            /*overflow:hidden;*/
+        }
+        .imageMain {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            flex: 1 0 100%;
+            /* flex-grow: 1; nó luôn giản ra  */
+            /* flex-shrink: 0;không cho nó co lại */
+            /* flex-basis: 100%; luôn luôn ở full */
+            overflow: hidden;
+        }
+        .imageProduct{
+            /*width:100%;*/
+        }
+        .title-detail-pro{
+            font-size:26px;
+            font-weight:900;
+            display:inline-block;
+        }
+        .content-detail-pro {
+            display: inline-block;
+            font-size: 30px;
+            font-weight: 900;
+            color: blue;
         }
     </style>
     <script>
+        var witdhImage = document.querySelector(".imageMain").style.width;
+        console.log(witdhImage)
+        var listImage = $(".imageMain");
+        var allImage = $(".allImage");
+        var defaulWidthImage = -878.91;
+        var index = 1;
+        var changeImage = function () {
+            if (index == listImage.length) {
+          
+                defaulWidthImage -=- 878.91
+                allImage.css({
+                    'transform': 'translateX('+defaulWidthImage+'px)',
+                });
+               
+                if (defaulWidthImage == 0)
+                    index =1;
+            } else {
+                allImage.css({
+                    'transform': 'translateX(' + defaulWidthImage + 'px)',
+                });
+                defaulWidthImage = defaulWidthImage + -878.91;
+                index++;
+                if (index == 5)
+                    defaulWidthImage = -878.91;
+            }
+            console.log(index);
+        }
+        setInterval(changeImage
+            , 2000);
+        console.log(allImage);
 
         var radioFirst = $(".radio-size.1");
 
         $(".radio-size.1").attr('checked', 'checked');
-
+        var countProduct = $(".label-size.1").data("count");
+        if (countProduct == undefined) {
+            document.getElementById("orderPro").disabled = true;
+        } else {
+            document.getElementById("orderPro").disabled = false;
+        }
         if ($(".radio-size.1").attr('checked', 'checked')) {
             $(".label-size.1").addClass("active");
             var countPro = $(".label-size.1").data("count");
@@ -272,7 +371,8 @@
             });
             this.classList.add("active");
             var countPro = $(this).data("count");
-            if (countPro == 0) {
+            
+            if (countPro == 0 ) {
                 document.getElementById("orderPro").disabled = true;
             } else {
                 document.getElementById("orderPro").disabled = false;

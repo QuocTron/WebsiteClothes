@@ -9,7 +9,7 @@
 {
     <div class="searchForm">
         <input type="text" class="txtTimKiem" name="tuKhoa" value="" placeholder="Nhập từ khóa cần tìm" />
-        <input type="submit" value="Tìm kiếm" style="color:black;" />
+        <input type="submit" value="Tìm kiếm" style="color:black;font-weight:bold;" />
     </div>
 
 }
@@ -80,7 +80,13 @@
                     </div>
                 </a>
             }
-
+            <style>
+                .txtTimKiem:focus {
+                    background: aqua;
+                    color: black;
+                    border: none;
+                }
+            </style>
         </div>
     </div>
 </div>

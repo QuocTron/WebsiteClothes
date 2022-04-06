@@ -18,6 +18,15 @@
             @Html.DisplayNameFor(model => model.KhachHang.TenKH)
         </th>
         <th>
+            SĐT
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.TinhTrangDDH)
         </th>
         <th>
@@ -40,54 +49,63 @@
 
     @foreach (var item in Model)
     {
-        <tr id="@item.MaDDH">
-            <td>
-                @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
-            </td>
-            <td>
-                <p class="trangThaiGiao">@item.TinhTrangDDH</p>
-            </td>
-            <td>
-                <select name="tinhTrangThanhToan" class="selectTinhTrangDonHang">
-                    @{
-                        if (item.DaThanhToan == true)
-                        {
-                            <option value="true"> Đã thanh toán</option>
-                            <option value="false"> Chưa thanh toán</option>
-                        }
-                        else
-                        {
-                            <option value="false"> Chưa thanh toán</option>
-                            <option value="true"> Đã thanh toán</option>
-                        }
-
-                    }
-
-                </select>
-
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UuDai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayDat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayGiao)
-            </td>
-            <td>
-                @{
-                    double tongTien = (double)context.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(n => n.SoLuong * n.DonGia);
+<tr id="@item.MaDDH">
+    <td>
+        @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.KhachHang.SDT)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.KhachHang.DiaChi)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.KhachHang.Email)
+    </td>
+    <td>
+        <p class="trangThaiGiao">@item.TinhTrangDDH</p>
+    </td>
+    <td>
+        <select name="tinhTrangThanhToan" class="selectTinhTrangDonHang">
+            @{
+                if (item.DaThanhToan == true)
+                {
+                    <option value="true"> Đã thanh toán</option>
+                    <option value="false"> Chưa thanh toán</option>
                 }
-                @tongTien.ToString("#,##") VNĐ
-            </td>
-            <td>
-                <button class="capNhatTrangThai" data-id="@item.MaDDH"> Cập nhật</button>
-              
-                @Html.ActionLink("Details", "DetailDHH", new { id = item.MaDDH }) 
+                else
+                {
+                    <option value="false"> Chưa thanh toán</option>
+                    <option value="true"> Đã thanh toán</option>
+                }
 
-            </td>
-        </tr>
+            }
+
+        </select>
+
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UuDai)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NgayDat)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NgayGiao)
+    </td>
+    <td>
+        @{
+            double tongTien = (double)context.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(n => n.SoLuong * n.DonGia);
+        }
+        @tongTien.ToString("#,##") VNĐ
+    </td>
+    <td>
+        <button class="capNhatTrangThai" data-id="@item.MaDDH"> Cập nhật</button>
+
+        @Html.ActionLink("Details", "DetailDHH", new { id = item.MaDDH })
+
+    </td>
+</tr>
 
     }
     <tr>
