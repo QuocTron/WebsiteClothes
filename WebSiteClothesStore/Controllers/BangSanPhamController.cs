@@ -30,6 +30,8 @@ namespace WebSiteClothesStore.Controllers
             {
                 return HttpNotFound();
             }
+            var listCategory = context.LoaiSanPhams;
+            ViewBag.ListLoai = listCategory;
             BangSanPham bsp = context.BangSanPhams.FirstOrDefault(s => s.MaSP == id);
             if (bsp == null)
                 return HttpNotFound();

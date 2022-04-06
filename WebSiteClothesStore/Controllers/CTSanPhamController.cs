@@ -13,16 +13,20 @@ namespace WebSiteClothesStore.Controllers
         // GET: CTSanPham
         public ActionResult ListCTSanPham()
         {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
             var All_sp = context.CTSanPhams;
             return View(All_sp);
         }
         //edit
         public ActionResult Edit(int? id)
         {
-            /*if (Session["TaiKhoanAdmin"] == null)
+            if (Session["TaiKhoanAdmin"] == null)
             {
                 return RedirectToAction("DangNhap", "Admin");
-            }*/
+            }
             if (id == null)
             {
                 return HttpNotFound();
@@ -37,10 +41,10 @@ namespace WebSiteClothesStore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CTSanPham bsp)
         {
-            /*if (Session["TaiKhoanAdmin"] == null)
+            if (Session["TaiKhoanAdmin"] == null)
             {
                 return RedirectToAction("DangNhap", "Admin");
-            }*/
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -87,29 +91,31 @@ namespace WebSiteClothesStore.Controllers
         //create
         public ActionResult Create()
         {
-            /*if (Session["TaiKhoanAdmin"] == null)
+            if (Session["TaiKhoanAdmin"] == null)
             {
                 return RedirectToAction("DangNhap", "Admin");
-            }*/
-            var listCategory = context.CTSanPhams;
-            ViewBag.ListCTSanPham = listCategory;
+            }
+            var listCategory = context.BangSanPhams;
+            ViewBag.BangSanPham = listCategory;
             return View();
         }
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            /*if (Session["TaiKhoanAdmin"] == null)
+            if (Session["TaiKhoanAdmin"] == null)
             {
                 return RedirectToAction("DangNhap", "Admin");
-            }*/
+            }
 
             var kichthuoc = collection["KichThuoc"];
             var slt = collection["SoLuongTon"];
+            var sanPham = collection["SanPham"];
 
             CTSanPham ct = new CTSanPham()
             {
                 KichThuoc = kichthuoc,
-                SoLuongTon = int.Parse(slt)
+                SoLuongTon = int.Parse(slt),
+                MaSP = int.Parse(sanPham)
 
             };
             context.CTSanPhams.Add(ct);

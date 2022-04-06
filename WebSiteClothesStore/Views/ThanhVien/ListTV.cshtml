@@ -13,7 +13,7 @@
         <tr>
             <th><h1>Tên Loại</h1></th>
             <th><h1>Tài Khoản</h1></th>
-            <th><h1>Mật Khảu</h1></th>
+            
             <th><h1>Họ Tên</h1></th>
             <th><h1>Địa Chỉ</h1></th>
             <th><h1>Email</h1></th>
@@ -32,9 +32,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TaiKhoan)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatKhau)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.HoTen)
             </td>
@@ -60,7 +58,7 @@
     </tbody>
 </table>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
 </p>
 <style>
     body {
