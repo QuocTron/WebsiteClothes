@@ -84,5 +84,40 @@ namespace WebSiteClothesStore.Controllers
             context.SaveChanges();
             return RedirectToAction("ListCTSanPham");
         }
+        //create
+        public ActionResult Create()
+        {
+            /*if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }*/
+            var listCategory = context.CTSanPhams;
+            ViewBag.ListCTSanPham = listCategory;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
+            /*if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }*/
+
+            var kichthuoc = collection["KichThuoc"];
+            var slt = collection["SoLuongTon"];
+
+            CTSanPham ct = new CTSanPham()
+            {
+                KichThuoc = kichthuoc,
+                SoLuongTon = int.Parse(slt)
+
+            };
+            context.CTSanPhams.Add(ct);
+            context.SaveChanges();
+
+            // không được
+            return RedirectToAction("ListCTSanPham");
+
+        }
     }
 }

@@ -279,6 +279,7 @@
     <Content Include="Views\ThanhVien\Edit.cshtml" />
     <Content Include="Views\ThanhVien\Delete.cshtml" />
     <Content Include="Views\ThanhVien\Create.cshtml" />
+    <Content Include="Views\CTSanPham\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
