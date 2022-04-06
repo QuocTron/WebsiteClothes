@@ -114,9 +114,9 @@
 
                 @using (Ajax.BeginForm("DangNhap", "Home", new { @strURL = Request.Url.ToString() }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" })) // muons chạy được các file view thì phải chạy thông qua controller của nó
                 {
-                    <input class="userName" type="text" name="txtTenDangNhap" required placeholder="User Name">
-                    <input class="passWord MatKhau" type="password" name="txtMatKhau" required="" placeholder="Password" }">
-                    <a href="#" style="display:block;" class="quenMatKhau">Quên Mật khẩu</a>
+                    <input class="userName" type="text" name="txtTenDangNhap" required placeholder="User Name" style="border:none;">
+                    <input class="passWord MatKhau" type="password" name="txtMatKhau" required="" placeholder="Password" style="border:none;margin-top:20px;" }">
+                    <a href="#" style="display:block;margin-top:35px;" class="quenMatKhau">Quên Mật khẩu</a>
                     <h3 style="font-weight:bold; color:red; text-align:left;" id="ThongBao"></h3>
                     <div class="row2">
                         <a href="#" class="btnRegistration">Đăng ký</a>
@@ -172,7 +172,7 @@
 
                                 </div>
                                 <label class="form-label" for="diaChi">Nhập số địa chỉ</label>
-                                <textarea style="display: block; margin-bottom: 10px; width: 370px; height: 82px;" id="diaChi" class="addressClient" name="DiaChi" placeholder="Nhập địa chỉ của bạn">
+                                <textarea style="display: block; margin-bottom: 10px; width: 370px; height: 30px;" id="diaChi" class="addressClient" name="DiaChi" placeholder="Nhập địa chỉ của bạn">
                             
         
                        </textarea>
@@ -233,6 +233,10 @@
     .account {
         display: flex;
         list-style: none;
+    }
+
+    .row2 {
+        margin-top: 20px;
     }
 
     .left-header {
@@ -426,6 +430,8 @@
     #btnLogin {
         font-weight: bold;
         border-radius: 6px 6px 6px;
+        color: black;
+        background-color: whitesmoke;
     }
 
     .dangnhap {
@@ -463,6 +469,10 @@
         background-color: red;
         color: white;
         border: none;
+    }
+
+    .row2 a {
+        margin-top: 20px;
     }
 
     .closeForm {
@@ -511,6 +521,11 @@
         border-radius: 15px 15px 15px;
     }
 
+        .userName:focus {
+            background: aqua;
+            color: black;
+        }
+
     .passWord {
         width: 100%;
         padding: 5px;
@@ -519,6 +534,11 @@
         border-radius: 15px 15px 15px;
         border-radius: 15px 15px 15px;
     }
+
+        .passWord:focus {
+            background: aqua;
+            color: black;
+        }
 
     .top_nav {
         border: solid 2px black;
@@ -553,12 +573,18 @@
         border-radius: 0.5rem
     }
 
+    .personalInfor {
+        margin-left: auto;
+        width: 250px;
+    }
+
     .formRegister {
         display: flex;
     }
 
     .register-form {
         display: none;
+        background-color: #E0FFFF;
     }
 
     .formQuenMatKhau {
@@ -568,6 +594,7 @@
         left: 50%;
         background-color: lightyellow;
     }
+
 </style>
 <script>
 
