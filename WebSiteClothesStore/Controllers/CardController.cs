@@ -377,9 +377,9 @@ namespace WebSiteClothesStore.Controllers
             AlternateView plainView = AlternateView
 .CreateAlternateViewFromString("Some plaintext", Encoding.UTF8, "text/plain");
             mSG.AlternateViews.Add(plainView);
-            mSG.From = new MailAddress(MyEmail.name, "Thông báo nhận lại mail từ Slider");
+            mSG.From = new MailAddress(MyEmail.name, "Thông báo từ Shop nhóm 4");
             mSG.To.Add(email); // thêm địa chỉ mail người nhận
-            mSG.Subject = "Mật khẩu vừa cập nhật, vui lòng đăng nhập lại";// Thêm tiêu đề mail;
+            mSG.Subject = "Bạn có một đơn hàng, vui lòng chọn xác nhận để có thể tiến hành lên đơn";// Thêm tiêu đề mail;
             string tenKH = kh.TenKH;
 
             string style = " color:black; font-size:20px; font-weight:900; background-color:greenyellow; padding:10px 50px; text-decoration:none; border-radius:20px;";
