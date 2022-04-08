@@ -17,7 +17,7 @@ namespace WebSiteClothesStore.Controllers
             {
                 return RedirectToAction("DangNhap", "Admin");
             }
-            var All_sp = context.CTSanPhams;
+            var All_sp = context.CTSanPhams.OrderBy(p=>p.BangSanPham.TenSP);
             return View(All_sp);
         }
         //edit

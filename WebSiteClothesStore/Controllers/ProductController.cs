@@ -95,10 +95,5 @@ namespace WebsiteStoreClothes.Controllers
             ViewBag.Product = product;
             return View();
         }
-        public ActionResult CapNhatGioHang(FormCollection f)
-        {
-            string bien =f["size"];
-            return View();
-        }
     }
 }

@@ -46,15 +46,12 @@ namespace WebSiteClothesStore.Controllers
             {
                 return RedirectToAction("DangNhap", "Admin");
             }
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            
                     var editbsp = context.BangSanPhams.FirstOrDefault(b => b.MaSP == bsp.MaSP);
                     editbsp.TenSP = bsp.TenSP;
-                    editbsp.LoaiSanPham.TenLoai = bsp.LoaiSanPham.TenLoai;
+                    
                     editbsp.Dongia = bsp.Dongia;
-                    /*editbsp.NgapCapNhat =bsp.NgapCapNhat;*/
+                    editbsp.NgapCapNhat = DateTime.Now;
                     editbsp.Anh1 = bsp.Anh1;
                     editbsp.Anh2 = bsp.Anh2;
                     editbsp.Anh3 = bsp.Anh3;
@@ -62,19 +59,14 @@ namespace WebSiteClothesStore.Controllers
                     editbsp.Anh5 = bsp.Anh5;
                    
                     context.SaveChanges();
-                    return View("ListSanPham", context.BangSanPhams);
-                }
-                catch (Exception)
-                {
-                    return HttpNotFound();
-                }
+                    return View("ListSanPham", context.BangSanPhams.OrderBy(p => p.TenSP));
+                           
+            //else
+            //{
+            //    ModelState.AddModelError("", "Input error!");
+            //    return View(bsp);
+            //}
 
-            }
-            else
-            {
-                ModelState.AddModelError("", "Input error!");
-                return View(bsp);
-            }
 
         }
         public string ProcessUpload(HttpPostedFileBase file)
@@ -125,7 +117,7 @@ namespace WebSiteClothesStore.Controllers
                 TenSP=tenSP,
                 Dongia= decimal.Parse(donGia),
                 MoTa = MoTa,
-                GiamGia=double.Parse(giamGia),
+                GiamGia=double.Parse(giamGia!=""?giamGia:"0"),
                 MaLoai=int.Parse(maLoai),
                 Anh1=anh1,
                 Anh2=anh2,

@@ -153,6 +153,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataContextLinq.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Mail\MyEmail.cs" />
     <Compile Include="Models\BangPhieuNhap.cs" />
     <Compile Include="Models\BangSanPham.cs" />
     <Compile Include="Models\CTDonDatHang.cs" />

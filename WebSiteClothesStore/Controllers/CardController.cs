@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using WebSiteClothesStore.Mail;
 using WebSiteClothesStore.Models;
 using WebSiteClothesStore.ModelTemp;
 
@@ -377,7 +378,7 @@ namespace WebSiteClothesStore.Controllers
             AlternateView plainView = AlternateView
 .CreateAlternateViewFromString("Some plaintext", Encoding.UTF8, "text/plain");
             mSG.AlternateViews.Add(plainView);
-            /*mSG.From = new MailAddress(MyEmail.name, "Thông báo từ Shop nhóm 4");*/
+            mSG.From = new MailAddress(MyEmail.name, "Thông báo từ Shop nhóm 4");
             mSG.To.Add(email); // thêm địa chỉ mail người nhận
             mSG.Subject = "Bạn có một đơn hàng, vui lòng chọn xác nhận để có thể tiến hành lên đơn";// Thêm tiêu đề mail;
             string tenKH = kh.TenKH;
@@ -401,7 +402,7 @@ namespace WebSiteClothesStore.Controllers
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 587;
             smtp.EnableSsl = true;
-            /*smtp.Credentials = new System.Net.NetworkCredential(MyEmail.name, MyEmail.password);*/
+            smtp.Credentials = new System.Net.NetworkCredential(MyEmail.name, MyEmail.password);
             smtp.Send(mSG);// gửi
             mSG = null;
             return RedirectToAction("ShowCardUser", "Home");

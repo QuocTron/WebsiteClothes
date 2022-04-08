@@ -9,6 +9,26 @@
     BangSanPham product = ViewBag.Product as BangSanPham;
 }
 
+<style>
+    .title_t{
+        color: black;
+    }
+    .desrip{
+        background:white;
+    }
+    .sizeProduct{
+        margin-bottom:10px;
+        height:60px;
+    }
+    #orderPro{
+        max-height:150px;
+        max-width:250px;
+    }
+ .label-size{
+    padding:29px;
+    text-align:center;
+ }
+</style>
 
 <body>
     <div>
@@ -39,15 +59,15 @@
             </div>
             <div class="contentProduct">
 
-                <span class="title-detail-pro">Tên sản phẩm:</span>
-                <span class="content-detail-pro"> @Html.DisplayFor(model => product.TenSP)</span>
+                <span class="title-detail-pro title_t ">Tên sản phẩm:</span>
+                <span class="title-detail-pro title_t"> @Html.DisplayFor(model => product.TenSP)</span>
 
 
-                <span class="title-detail-pro">Tên nhà sản xuất: </span>
-                <span class="content-detail-pro"> @Html.DisplayFor(model => product.NhaSX.TenNSX)</span>
+                <span class="title-detail-pro title_t">Tên nhà sản xuất: </span>
+                <span class="ti-detail-pro title_t"> @Html.DisplayFor(model => product.NhaSX.TenNSX)</span>
 
 
-                <span class="title-detail-pro">Loại sản phẩm: </span>
+                <span class="title-detail-pro title_t">Loại sản phẩm: </span>
 
                 @Html.DisplayFor(model => product.LoaiSanPham.TenLoai)
 
@@ -66,7 +86,7 @@
                     <span class="discount-product">- @product.GiamGia %</span>
                     <span class="price">
 
-                        <span class="title-detail-pro">Đơn giá</span>
+                        <span class="title-detail-pro title_t">Đơn giá:</span>
                         <del style="margin-right:10px;">
                             <span class="woocommerce-Price-amount amount">
                                 @product.Dongia.ToString("#,##")
@@ -84,7 +104,7 @@
                 }
                 else
                 {
-                    <span class="title-detail-pro">Đơn giá: </span>
+                    <span class="title-detail-pro title_t">Đơn giá: </span>
 
                     <span class="woocommerce-Price-amount amount price-pro">
                         @product.Dongia.ToString("#,##")
@@ -92,16 +112,16 @@
                     </span>
                 }
 
-                <span class="title-detail-pro">Lượt xem: </span>
+                <span class="title-detail-pro title_t">Lượt xem: </span>
                 <span class="content-detail-pro">  @Html.DisplayFor(model => product.LuotXem)</span>
 
-                <span class="title-detail-pro">Lượt chọn: </span>
+                <span class="title-detail-pro title_t">Lượt chọn: </span>
                 <span class="content-detail-pro">  @Html.DisplayFor(model => product.LuotBinhChon)</span>
                 
-                <span class="title-detail-pro">Lượt bình luận: </span>
+                <span class="title-detail-pro title_t">Lượt bình luận: </span>
                 <span class="content-detail-pro">  @Html.DisplayFor(model => product.LuotBInhLuan)</span>
                 
-                <span class="title-detail-pro">Số lần mua: </span>
+                <span class="title-detail-pro title_t">Số lần mua: </span>
                 <span class="content-detail-pro">  @Html.DisplayFor(model => product.SoLanMua)</span>
                 
 
@@ -128,8 +148,10 @@
                     }
                 </div>
 
-                <span>Mô tả</span>
-                @Html.DisplayFor(model => product.MoTa)
+                <div class="desrip">
+                    <span>Mô tả:</br></span>
+                    @Html.DisplayFor(model => product.MoTa)
+                </div>
 
 
                 @* } *@
@@ -204,6 +226,7 @@
         </a>
     }
     <style>
+        
         .detailProduct {
             display: flex;
             position:relative;
@@ -250,6 +273,10 @@
             display: flex;
             flex-direction: column;
             margin-left: 50px;
+            color:black;
+            font-weight:bold;
+            font-size:30px;
+            margin-bottom:10px;
         }
 
         .radio-size {
@@ -270,7 +297,10 @@
 
         .sizeProduct{
             display:flex;
+            max-height:150px;
+            max-width:250px;
         }
+        
         .inventory-product {
             position: absolute;
             top: 50%;
