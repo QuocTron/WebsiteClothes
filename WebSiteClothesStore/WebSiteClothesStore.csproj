@@ -142,6 +142,7 @@
     <Compile Include="Controllers\DanhMucController.cs" />
     <Compile Include="Controllers\DonDatHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaymentRequest.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ThanhVienController.cs" />
     <Compile Include="Controllers\TimKiemController.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Models\ThanhVien.cs" />
     <Compile Include="ModelTemp\ItemCardTemp.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="ModelTemp\MoMoSecurity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

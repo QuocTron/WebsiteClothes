@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -437,7 +438,82 @@ namespace WebSiteClothesStore.Controllers
             }
             return RedirectToAction("ThongBaoDatHang", "Card");
         }
-       public ActionResult ThongBaoDatHang()
+        public ActionResult PaymentByMomo()
+        {
+
+            string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            string partnerCode = "MOMOIP1R20220408";
+            string accessKey = "2Rq8mwC0AtwgOHBR";
+            string serectkey = "UavKQ3fniXWMUwElozhdr67CrfTas1TC";
+            string orderInfo = DateTime.Now.ToString();
+            string returnUrl = "https://localhost:44331/Card/SavePayment";// nhận đường dẫn từ momo
+            string ipnUrl = "https://localhost:44331/Card/SavePayment";
+            string redirectUrl = "https://localhost:44331/Card/ReturnUrl";
+            string requestType = "captureWallet";
+
+            string amount = "1000";
+            string orderId = Guid.NewGuid().ToString();
+            string requestId = Guid.NewGuid().ToString();
+            string extraData = "";
+
+            //Before sign HMAC SHA256 signature
+            string rawHash = "accessKey=" + accessKey +
+                "&amount=" + amount +
+                "&extraData=" + extraData +
+                "&ipnUrl=" + ipnUrl +
+                "&orderId=" + orderId +
+                "&orderInfo=" + orderInfo +
+                "&partnerCode=" + partnerCode +
+                "&redirectUrl=" + redirectUrl +
+                "&requestId=" + requestId +
+                "&requestType=" + requestType
+                ;
+
+
+
+            MoMoSecurity crypto = new MoMoSecurity();
+            //sign signature SHA256
+            string signature = crypto.signSHA256(rawHash, serectkey);
+
+            //build body json request
+            JObject message = new JObject
+            {
+                { "partnerCode", partnerCode },
+                { "partnerName", "Test" },
+                { "storeId", "MomoTestStore" },
+                { "requestId", requestId },
+                { "amount", amount },
+                { "orderId", orderId },
+                { "orderInfo", orderInfo },
+                { "redirectUrl", redirectUrl },
+                { "ipnUrl", ipnUrl },
+                { "lang", "en" },
+                { "extraData", extraData },
+                { "requestType", requestType },
+                { "signature", signature }
+
+            };
+            string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+
+            JObject jmessage = JObject.Parse(responseFromMomo);
+            return Redirect(jmessage.GetValue("payUrl").ToString());
+        }
+
+        
+        public ActionResult ReturnUrl()
+        {
+            return View("ThongBaoDatHang");
+        }
+
+        [HttpPost]
+        public ActionResult SavePayment()
+        {
+            var bien = 0;
+
+            return View("ShowCardProduct");
+
+        }
+        public ActionResult ThongBaoDatHang()
         {
             return View();
         }

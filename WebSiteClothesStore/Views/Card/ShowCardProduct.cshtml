@@ -165,7 +165,7 @@
 {
     <h2 style="text-align:center; margin-top:50px;">Nhập thông tin nhận hàng</h2>
     <div class="ThongTinMuaHang">
-        @using (Html.BeginForm("OrderProducts", "Card"))
+        @using (Html.BeginForm("PaymentByMomo", "Card"))
         {
             <table align="center" class="tableInfoClient">
                 <tr>
@@ -266,6 +266,8 @@
             <div class="divDatHang" style="text-align:center">
                 <input type="submit" value="Đặt hàng" class="btn btn-danger" id="btn-dathang" />
                 <a href="@Url.Action("ShowAllProduct", "Product")" class="btn btn-sussce">Mua tiếp</a>
+                <a href="@Url.Action("PaymentByMomo", "Card")" class="btn btn-sussce">Thanh toán qua Momo</a>
+                <div class="DatHangMomo"></div>
             </div>
         }
     </div>
