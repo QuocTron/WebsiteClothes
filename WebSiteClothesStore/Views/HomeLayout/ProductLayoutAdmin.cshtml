@@ -35,14 +35,14 @@
     </header>
 
     <div class="title-update">
-       
-        <div class="col-md-3 market-update-gd">
+
+        <div class="col-md-3 market-update-gd item-title">
             <a href="@Url.Action("ListDanhMuc","DanhMuc")">
                 <div class="market-update-block clr-block-2">
-                    <div class="col-md-4 market-update-right">
+                    <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
-                    <div class="col-md-8 market-update-left">
+                    <div class="col-md-10 market-update-left">
                         <h4>Danh mục sản phẩm</h4>
                         <h3>(@context.LoaiSanPhams.Count()) loại sản phẩm</h3>
                         <p>(@context.LoaiSanPhams.Sum(p => p.BangSanPhams.Count())) Sản phẩm</p>
@@ -51,16 +51,16 @@
                 </div>
             </a>
         </div>
-        
 
-        
-        <div class="col-md-3 market-update-gd">
+
+
+        <div class="col-md-3 market-update-gd item-title">
             <a href="@Url.Action("ListSanPham","BangSanPham")">
                 <div class="market-update-block clr-block-2">
-                    <div class="col-md-4 market-update-right">
+                    <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
-                    <div class="col-md-8 market-update-left">
+                    <div class="col-md-10 market-update-left">
                         <h4>Sản phẩm</h4>
                         <h3>(@context.BangSanPhams.Count())Sản phẩm</h3>
                         <p>(@context.CTSanPhams.Sum(p => p.SoLuongTon)) Số lượng còn</p>
@@ -69,17 +69,17 @@
                 </div>
             </a>
         </div>
-       
 
 
-      
-        <div class="col-md-3 market-update-gd">
+
+
+        <div class="col-md-3 market-update-gd item-title">
             <a href="@Url.Action("ListCTSanPham","CTSanPham")">
                 <div class="market-update-block clr-block-2">
-                    <div class="col-md-4 market-update-right">
+                    <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
-                    <div class="col-md-8 market-update-left">
+                    <div class="col-md-10 market-update-left">
                         <h4>Chi tiết sản phẩm</h4>
                         <h3>(@context.CTSanPhams.Count()) Chi tiết sản phẩm</h3>
                         <p>(@context.CTSanPhams.Sum(p => p.SoLuongTon)) Số lượng còn</p>
@@ -88,43 +88,73 @@
                 </div>
             </a>
         </div>
-       
 
-        
-        <div class="col-md-3 market-update-gd">
+
+
+        <div class="col-md-3 market-update-gd item-title">
             <a href="@Url.Action("ListDonHangDaGiao","DonDatHang")">
                 <div class="market-update-block clr-block-2">
-                    <div class="col-md-4 market-update-right">
+                    <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
-                    <div class="col-md-8 market-update-left">
-                        <h4>Đơn hàng đã thanh toán</h4>
+                    <div class="col-md-10 market-update-left">
+                        <h4>Đơn hàng đã giao</h4>
                         <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan == true).Count()) đơn hàng</h3>
-                        <p>(@context.DonDatHangs.Where(n=>n.DaThanhToan==true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
+                        <p>Doanh thu: (@context.DonDatHangs.Where(n => n.DaThanhToan == true && n.TinhTrangDDH.Contains("Đã giao")).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
             </a>
         </div>
-    
-       
-        <div class="col-md-3 market-update-gd">
+
+
+        <div class="col-md-3 market-update-gd item-title">
+            <a href="@Url.Action("ListDonHangDaThanhToan","DonDatHang")">
+                <div class="market-update-block clr-block-2">
+                    <div class="col-md-2 market-update-right">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="col-md-10 market-update-left">
+                        <h4>Đơn hàng đã được thanh toán</h4>
+                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Count()) đơn hàng</h3>
+                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaThanhToan == true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 market-update-gd item-title">
             <a href="@Url.Action("ListDonHangDangGiao","DonDatHang")">
                 <div class="market-update-block clr-block-2">
-                    <div class="col-md-4 market-update-right">
+                    <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
-                    <div class="col-md-8 market-update-left">
-                        <h4>Đơn hàng chưa thanh toán</h4>
+                    <div class="col-md-10 market-update-left">
+                        <h4>Đơn hàng đang giao</h4>
                         <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Count()) đơn hàng</h3>
-                        <p>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong))) đơn hàng</p>
+                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaThanhToan == true && n.TinhTrangDDH.Contains("Đang giao")).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
             </a>
         </div>
-       
 
+        <div class="col-md-3 market-update-gd item-title">
+            <a href="@Url.Action("ListDonDatHangDaHuy","DonDatHang")">
+                <div class="market-update-block clr-block-2">
+                    <div class="col-md-2 market-update-right">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="col-md-10 market-update-left">
+                        <h4>Đơn hàng đã bị hủy</h4>
+                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Count()) đơn hàng</h3>
+                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaThanhToan != true && n.DaHuy!=true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </a>
+        </div>
     </div>
 
     <div class="container container-products">
@@ -172,5 +202,15 @@
     }
     .contentCreatePro{
 
+    }
+    .title-update{
+        display:flex;
+        flex-wrap:wrap;
+    }
+    .item-title{
+        margin-top:20px;
+    }
+    .container{
+        margin-top:300px;
     }
 </style>

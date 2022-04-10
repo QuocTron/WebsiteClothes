@@ -17,7 +17,7 @@ namespace WebSiteClothesStore.Controllers
             {
                 return RedirectToAction("DangNhap", "Admin");
             }
-            var listDonHang = context.DonDatHangs.Where(p=>p.DaDat==true && p.DaThanhToan==true && p.DaHuy!=true).OrderBy(p => p.NgayDat);
+            var listDonHang = context.DonDatHangs.Where(p=>p.DaDat==true && p.DaThanhToan==true && p.DaHuy!=true && p.TinhTrangDDH.Contains("Đã giao")).OrderBy(p => p.NgayDat);
             return View(listDonHang);
         }
         public ActionResult ListDonHangDangGiao()
@@ -27,6 +27,26 @@ namespace WebSiteClothesStore.Controllers
                 return RedirectToAction("DangNhap", "Admin");
             }
             var listDonHang = context.DonDatHangs.Where(p => p.DaDat == true && p.DaThanhToan != true && p.DaHuy != true).OrderBy(p=>p.NgayDat);
+            return View(listDonHang);
+        }
+
+        public ActionResult ListDonHangDaThanhToan()
+        {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
+            var listDonHang = context.DonDatHangs.Where(p => p.DaDat == true && p.DaThanhToan == true && p.DaHuy != true ).OrderBy(p => p.NgayDat);
+            return View(listDonHang);
+        }
+
+        public ActionResult ListDonDatHangDaHuy()
+        {
+            if (Session["TaiKhoanAdmin"] == null)
+            {
+                return RedirectToAction("DangNhap", "Admin");
+            }
+            var listDonHang = context.DonDatHangs.Where(p => p.DaDat == true && p.DaHuy == true).OrderBy(p => p.NgayDat);
             return View(listDonHang);
         }
 
@@ -58,6 +78,25 @@ namespace WebSiteClothesStore.Controllers
             ViewBag.CTDonDatHang = listCTDonDatHang;
 
             return View(donDatHang);
+        }
+
+        public ActionResult DeleteDDH(int id)
+        {
+            var listDetailDonHang = context.CTDonDatHangs.Where(p=>p.MaDDH==id);
+
+            foreach(var item in listDetailDonHang)
+            {
+                var itemPro = context.CTSanPhams.FirstOrDefault(p => p.MaCT == item.MaCTSP);
+                if (itemPro != null)
+                {
+                    itemPro.SoLuongTon += item.SoLuong;
+                    context.SaveChanges();
+                }
+            }
+            var donDatHang = context.DonDatHangs.FirstOrDefault(p => p.MaDDH == id);
+            context.DonDatHangs.Remove(donDatHang);
+            context.SaveChanges();
+            return RedirectToAction("ListDonDatHangDaHuy", "DonDatHang");
         }
     }
 }

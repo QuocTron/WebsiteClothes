@@ -20,6 +20,15 @@ namespace WebSiteClothesStore.Controllers
             var All_sp = context.BangSanPhams;
             return View(All_sp);
         }
+        public ActionResult ListProductAdmin()
+        {
+            //if (Session["TaiKhoanAdmin"] == null)
+            //{
+            //    return RedirectToAction("DangNhap", "Admin");
+            //}
+            var All_sp = context.CTSanPhams;
+            return View(All_sp);
+        }
         public ActionResult Edit(int? id)
         {
             if (Session["TaiKhoanAdmin"] == null)

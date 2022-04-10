@@ -284,6 +284,9 @@
     <Content Include="Views\CTSanPham\Create.cshtml" />
     <Content Include="Views\Card\ThongBaoKhongThanhCong.cshtml" />
     <Content Include="Views\Card\OrderProducts.cshtml" />
+    <Content Include="Views\BangSanPham\ListProductAdmin.cshtml" />
+    <Content Include="Views\DonDatHang\ListDonHangDaThanhToan.cshtml" />
+    <Content Include="Views\DonDatHang\ListDonDatHangDaHuy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
