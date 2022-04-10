@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+aaaaaaaaa
+=======
 thử đi
+>>>>>>> 42de5fb41e1698effc76b980cc87987229c2a8a9
