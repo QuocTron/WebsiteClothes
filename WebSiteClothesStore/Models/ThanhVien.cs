@@ -1,4 +1,4 @@
-namespace WebSiteClothesStore.Models
+﻿namespace WebSiteClothesStore.Models
 {
     using System;
     using System.Collections.Generic;
@@ -35,6 +35,7 @@ namespace WebSiteClothesStore.Models
 
         [Required]
         [StringLength(50)]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail không hợp lệ")]
         public string Email { get; set; }
 
         [StringLength(12)]

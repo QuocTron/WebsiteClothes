@@ -4,15 +4,15 @@
     ViewBag.Title = "KQTimKiem";
     Layout = "~/Views/HomeLayout/ProductLayout.cshtml";
 }
-
-@using (Ajax.BeginForm("KQTimKiemPartial", "TimKiem", new AjaxOptions { @UpdateTargetId = "KQTimKiem", InsertionMode = InsertionMode.Replace }))
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@using (Ajax.BeginForm("KQTimKiemPartial", "TimKiem", new AjaxOptions { HttpMethod="Post", @UpdateTargetId = "KQTimKiem", InsertionMode = InsertionMode.Replace }))
 {
     <div class="searchForm">
         <input type="text" class="txtTimKiem" name="tuKhoa" value="" placeholder="Nhập từ khóa cần tìm" />
         <input type="submit" value="Tìm kiếm" style="color:black;font-weight:bold;" />
     </div>
-
 }
+
 <div id="KQTimKiem">
     <div class="col-md-9 product">
         <div class=" bottom-product">

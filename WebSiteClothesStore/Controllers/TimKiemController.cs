@@ -35,6 +35,7 @@ namespace WebSiteClothesStore.Controllers
             //Gọi về get Tìm kiếm
             return RedirectToAction("KQTimKiem", new { @tuKhoa = tuKhoa }); // gọi về action RedirectToAction
         }
+        [HttpPost]
         public ActionResult KQTimKiemPartial(string tuKhoa)
         {
             // tìm kiếm them sản phẩm
