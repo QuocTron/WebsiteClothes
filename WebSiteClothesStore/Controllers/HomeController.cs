@@ -126,6 +126,7 @@ namespace WebSiteClothesStore.Controllers
         public ActionResult DangXuat()
         {
             Session["TaiKhoan"] = null;
+            Session["KhachHang"] = null;
             Session["GioHang"] = null;
             Session["GioHangTam"] = null;
             ViewBag.GioHangCSDL = null;
@@ -228,6 +229,12 @@ namespace WebSiteClothesStore.Controllers
                 Models.ThanhVien member = Session["TaiKhoan"] as Models.ThanhVien;
                 Models.KhachHang client = db.KhachHangs.FirstOrDefault(p => p.MaTV == member.MaTV);
                 var listCardClient = db.DonDatHangs.Where(p => p.MaKH == client.MaKH && p.DaDat==true);
+                return View(listCardClient);
+            }
+            if (Session["KhachHang"] != null)
+            {
+                Models.KhachHang kh = Session["KhachHang"] as Models.KhachHang;
+                var listCardClient = db.DonDatHangs.Where(p => p.MaKH == kh.MaKH && p.DaDat == true);
                 return View(listCardClient);
             }
             return View("ShowCardUser");

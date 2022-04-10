@@ -282,6 +282,8 @@
     <Content Include="Views\ThanhVien\Delete.cshtml" />
     <Content Include="Views\ThanhVien\Create.cshtml" />
     <Content Include="Views\CTSanPham\Create.cshtml" />
+    <Content Include="Views\Card\ThongBaoKhongThanhCong.cshtml" />
+    <Content Include="Views\Card\OrderProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

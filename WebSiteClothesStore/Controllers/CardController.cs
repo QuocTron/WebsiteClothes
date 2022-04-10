@@ -18,6 +18,8 @@ namespace WebSiteClothesStore.Controllers
 
         // GET: AddProduct
 
+        static int maHoaDon = 0;
+        static double tongGiaTienHoaDon = 0;
         MydataContext db = new MydataContext();
         public List<ItemCardTemp> GetGioHang()
         {
@@ -142,6 +144,7 @@ namespace WebSiteClothesStore.Controllers
                     ViewBag.TongThanhTien = listDetailCart.Sum(p => p.SoLuong * p.DonGia);
                 }
             }
+           
             return View("ShowCardProduct");
 
         }
@@ -282,11 +285,39 @@ namespace WebSiteClothesStore.Controllers
 
         public ActionResult OrderProducts(KhachHang kh)
         {
-            int maDH=0;
-            string email = "";
-            DateTime? dateOrder = DateTime.Now;
+   
+            if (Session["KhachHang"] != null)
+            {
+                KhachHang client = Session["KhachHang"] as KhachHang;
+
+                client.TenKH = kh.TenKH;
+                client.DiaChi = kh.DiaChi;
+                client.SDT = kh.SDT;
+                client.Email = kh.Email;
+
+                db.SaveChanges();
+                if (Session["TaiKhoan"] == null)
+                {
+                    var listCard = GetGioHang();
+                    ViewBag.GioHangTam = listCard;
+
+                    tongGiaTienHoaDon = listCard.Sum(p => p.SoLuong * p.DonGia);
+                    ViewBag.TongThanhTien = tongGiaTienHoaDon;
+                }
+                else
+                {
+                    ViewBag.KhachHang = client;
+                    ViewBag.GioHangCSDL = db.CTDonDatHangs.Where(p => p.MaDDH == maHoaDon);
+                    tongGiaTienHoaDon = (double)db.CTDonDatHangs.Where(p => p.MaDDH == maHoaDon).Sum(p => p.SoLuong * p.DonGia);
+                    ViewBag.TongThanhTien = tongGiaTienHoaDon;
+                }
+                Session["KhachHang"] = client;
+                return View();
+               
+            }    
+
             Session["KhachHang"] = kh;
-            double tongGiaTriDonHang = 0;
+
             if (Session["GioHang"] == null && Session["GioHangTam"]==null)
             {
                 return RedirectToAction("Index", "HomeWeb");
@@ -301,25 +332,30 @@ namespace WebSiteClothesStore.Controllers
                     client.DiaChi = tv.DiaChi;
                     client.SDT = tv.SDT;
                     client.Email = tv.Email;
-                    email = tv.Email;
+
                     db.SaveChanges();
                     var cardOdered = db.DonDatHangs.FirstOrDefault(p => p.MaKH == client.MaKH && p.DaDat == false);
                     if (cardOdered != null)
                     {// có đơn => cập nhật lại trạng thái đặt
                         cardOdered.MaKH = client.MaKH;
                         cardOdered.NgayDat = DateTime.Now;
-                        cardOdered.NgayGiao = DateTime.Now.AddDays(4);
+                       
                         cardOdered.TinhTrangDDH = "Đang Giao";
                         cardOdered.DaThanhToan = false;
                         cardOdered.UuDai = 0;
                         //cardOdered.DaDat = true;
                         cardOdered.DaHuy = false;
-                        maDH = cardOdered.MaDDH;
-                        dateOrder = cardOdered.NgayDat;
-                        tongGiaTriDonHang = (double)db.CTDonDatHangs.Where(p => p.MaDDH == maDH).Sum(p => p.SoLuong * p.DonGia);
+
+                        maHoaDon = cardOdered.MaDDH;
+                        tongGiaTienHoaDon = (double)db.CTDonDatHangs.Where(p => p.MaDDH == maHoaDon).Sum(p => p.SoLuong * p.DonGia);
                         db.SaveChanges();
-                        Session["GioHang"] = null;
-                        ViewBag.GioHangCSDL = null;
+
+
+                        ViewBag.KhachHang = client;
+                        ViewBag.GioHangCSDL = db.CTDonDatHangs.Where(p => p.MaDDH == maHoaDon);
+                        ViewBag.TongThanhTien = tongGiaTienHoaDon;
+                        //Session["GioHang"] = null;
+                        //ViewBag.GioHangCSDL = null;
                     }
                 }
             }
@@ -327,7 +363,7 @@ namespace WebSiteClothesStore.Controllers
             {
                 KhachHang newClient = new KhachHang();
                 newClient = kh;
-                email = kh.Email;
+
                 db.KhachHangs.Add(newClient);
                 db.SaveChanges();
 
@@ -335,14 +371,15 @@ namespace WebSiteClothesStore.Controllers
                 DonDatHang donDH = new DonDatHang();
                 donDH.MaKH = newClient.MaKH;
                 donDH.NgayDat =DateTime.Now;
-                donDH.NgayGiao = DateTime.Parse(DateTime.Now.AddDays(4).ToLongDateString());
-                donDH.TinhTrangDDH = "Chưa Giao";
+               
+                donDH.TinhTrangDDH = "Đang Giao";
                 donDH.DaThanhToan = false;
                 donDH.UuDai = 0;
                 donDH.DaHuy = false;
                 //donDH.DaDat = true;
                 db.DonDatHangs.Add(donDH);
                 db.SaveChanges();
+                maHoaDon = donDH.MaDDH;
                 List<ItemCardTemp> listGH = GetGioHang(); // nhận giá trị từ session
                 foreach (var item in listGH)
                 {
@@ -356,11 +393,14 @@ namespace WebSiteClothesStore.Controllers
                     db.CTDonDatHangs.Add(ctddh);
                     db.SaveChanges();
                 }
-                tongGiaTriDonHang = listGH.Sum(p => p.SoLuong * p.DonGia);
-                dateOrder = donDH.NgayDat;
-                maDH = donDH.MaDDH;
-                Session["GioHangTam"] = null;
-                ViewBag.GioHangTam = null;
+               
+                ViewBag.GioHangTam = listGH;
+
+                tongGiaTienHoaDon = listGH.Sum(p => p.SoLuong * p.DonGia);
+                ViewBag.TongThanhTien = tongGiaTienHoaDon;
+
+                //Session["GioHangTam"] = null;
+                //ViewBag.GioHangTam = null;
 
             }
             //List<CTDonDatHang> listDetailProduct = db.CTDonDatHangs.Where(p => p.MaDDH == maDH).ToList();
@@ -375,22 +415,31 @@ namespace WebSiteClothesStore.Controllers
             //    db.SaveChanges();
             //}
 
+            return View();
+        }
+
+
+       
+        public ActionResult Payment()
+        {
+            KhachHang kh = Session["KhachHang"] as KhachHang;
+            var hoaDon = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maHoaDon);
+
             MailMessage mSG = new MailMessage();
-            AlternateView plainView = AlternateView
-.CreateAlternateViewFromString("Some plaintext", Encoding.UTF8, "text/plain");
+            AlternateView plainView = AlternateView.CreateAlternateViewFromString("Some plaintext", Encoding.UTF8, "text/plain");
             mSG.AlternateViews.Add(plainView);
             mSG.From = new MailAddress(MyEmail.name, "Thông báo từ Shop nhóm 4");
-            mSG.To.Add(email); // thêm địa chỉ mail người nhận
+            mSG.To.Add(kh.Email); // thêm địa chỉ mail người nhận
             mSG.Subject = "Bạn có một đơn hàng, vui lòng chọn xác nhận để có thể tiến hành lên đơn";// Thêm tiêu đề mail;
             string tenKH = kh.TenKH;
 
             string style = " color:black; font-size:20px; font-weight:900; background-color:greenyellow; padding:10px 50px; text-decoration:none; border-radius:20px;";
             string test = string.Format(@"""{0}""", style);
-            string link = string.Format(@"""{0}""", "https://localhost:44331/Card/ConfirmCard?maDH="+maDH+"");
+            string link = string.Format(@"""{0}""", "https://localhost:44331/Card/ConfirmCard?maDH=" + maHoaDon + "");
             string sttykeTheA = string.Format(@"""{0}""", "b");
             string displayInline = string.Format(@"""{0}""", "display:inline-block;");
             //padding:10px 20px; background - color:greenyellow;text - decoration:none;border - radius:20px;color: black; font - size:16px;font - weight:900; 
-            string htmlText = $"<b style={ displayInline}>Đơn hàng của (anh/chị) :</b> <h3 style={ displayInline}>{tenKH}</h3> <b style={ displayInline}>Có giá trị là  :</b><h3 style={ displayInline}>{tongGiaTriDonHang.ToString("#,##")} VNĐ </h3> <b style={ displayInline}> được đặt vào ngày : </b><h3 style={ displayInline}>{dateOrder}</h3>  " +
+            string htmlText = $"<b style={ displayInline}>Đơn hàng của (anh/chị) :</b> <h3 style={ displayInline}>{tenKH}</h3> <b style={ displayInline}>Có giá trị là  :</b><h3 style={ displayInline}>{tongGiaTienHoaDon.ToString("#,##")} VNĐ </h3> <b style={ displayInline}> được đặt vào ngày : </b><h3 style={ displayInline}>{hoaDon.NgayDat}</h3>  " +
                 $"<a href={link} style={test} target='_blank'>Xác nhận đơn hàng </a>";
 
             AlternateView htmlView =
@@ -406,24 +455,26 @@ namespace WebSiteClothesStore.Controllers
             smtp.Credentials = new System.Net.NetworkCredential(MyEmail.name, MyEmail.password);
             smtp.Send(mSG);// gửi
             mSG = null;
+          
             return RedirectToAction("ShowCardUser", "Home");
         }
         public ActionResult ConfirmCard(int maDH)
         {
             if (maDH == 0)
             {
-                return RedirectToAction("Index", "HomeWeb");
+                return View("ThongBaoKhongThanhCong");
             }
             List<CTDonDatHang> listDetailProduct = db.CTDonDatHangs.Where(p => p.MaDDH == maDH).ToList();
             if (listDetailProduct.Count() == 0)
             {
-                return RedirectToAction("Index", "HomeWeb");
+                return View("ThongBaoKhongThanhCong");
             }
             DonDatHang donDatHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDH);
             if (donDatHang != null)
             {
                 donDatHang.DaDat =true;
                 donDatHang.NgayGiao = DateTime.Now.AddDays(4);
+                donDatHang.DaThanhToan = false;
                 db.SaveChanges();
             }
             foreach (var item in listDetailProduct)
@@ -436,46 +487,55 @@ namespace WebSiteClothesStore.Controllers
                     productUpdateCount.SoLuongTon -= item.SoLuong;
                 db.SaveChanges();
             }
+            Session["GioHang"] = null;
+            ViewBag.GioHangCSDL = null;
+            Session["GioHangTam"] = null;
+            ViewBag.GioHangTam = null;
             return RedirectToAction("ThongBaoDatHang", "Card");
         }
-        public ActionResult PaymentByMomo()
-        {
 
-            string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+
+        public ActionResult PaymentByMomo(FormCollection collection)
+        {
+            KhachHang kh = Session["KhachHang"] as KhachHang;
+            var hoaDon = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maHoaDon);
+            
+
+            string endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             string partnerCode = "MOMOIP1R20220408";
             string accessKey = "2Rq8mwC0AtwgOHBR";
             string serectkey = "UavKQ3fniXWMUwElozhdr67CrfTas1TC";
             string orderInfo = DateTime.Now.ToString();
-            string returnUrl = "https://localhost:44331/Card/SavePayment";// nhận đường dẫn từ momo
-            string ipnUrl = "https://localhost:44331/Card/SavePayment";
+            string returnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";// nhận đường dẫn từ momo
+            string ipnUrl = "https://localhost:44331/Card/PaymentMomo";
             string redirectUrl = "https://localhost:44331/Card/ReturnUrl";
             string requestType = "captureWallet";
 
-            string amount = "1000";
+            string amount = tongGiaTienHoaDon.ToString() ;
             string orderId = Guid.NewGuid().ToString();
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
 
-            //Before sign HMAC SHA256 signature
+            ////Before sign HMAC SHA256 signature
             string rawHash = "accessKey=" + accessKey +
-                "&amount=" + amount +
-                "&extraData=" + extraData +
-                "&ipnUrl=" + ipnUrl +
-                "&orderId=" + orderId +
-                "&orderInfo=" + orderInfo +
-                "&partnerCode=" + partnerCode +
-                "&redirectUrl=" + redirectUrl +
-                "&requestId=" + requestId +
-                "&requestType=" + requestType
-                ;
+                 "&amount=" + amount +
+                 "&extraData=" + extraData +
+                 "&ipnUrl=" + ipnUrl +
+                 "&orderId=" + orderId +
+                 "&orderInfo=" + orderInfo +
+                 "&partnerCode=" + partnerCode +
+                 "&redirectUrl=" + redirectUrl +
+                 "&requestId=" + requestId +
+                 "&requestType=" + requestType
+                 ;
 
 
 
             MoMoSecurity crypto = new MoMoSecurity();
-            //sign signature SHA256
+            ////sign signature SHA256
             string signature = crypto.signSHA256(rawHash, serectkey);
 
-            //build body json request
+            ////build body json request
             JObject message = new JObject
             {
                 { "partnerCode", partnerCode },
@@ -496,19 +556,60 @@ namespace WebSiteClothesStore.Controllers
             string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
 
             JObject jmessage = JObject.Parse(responseFromMomo);
+
+           
+
+
             return Redirect(jmessage.GetValue("payUrl").ToString());
         }
 
         
         public ActionResult ReturnUrl()
         {
-            return View("ThongBaoDatHang");
+            string status = Request["message"].ToString();
+            if(status.Contains("Successful"))
+            {
+                List<CTDonDatHang> listDetailProduct = db.CTDonDatHangs.Where(p => p.MaDDH == maHoaDon).ToList();
+                if (listDetailProduct.Count() == 0)
+                {
+                    return View("ThongBaoKhongThanhCong");
+                }
+
+                DonDatHang donDatHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maHoaDon);
+                if (donDatHang != null)
+                {
+                    donDatHang.DaDat = true;
+                    donDatHang.NgayGiao = DateTime.Now.AddDays(4);
+                    donDatHang.DaThanhToan = true;
+                    db.SaveChanges();
+                }
+                foreach (var item in listDetailProduct)
+                {
+                    BangSanPham productUpdateNumberBuys = db.BangSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP);
+                    if (productUpdateNumberBuys != null)
+                        productUpdateNumberBuys.SoLanMua += item.SoLuong;
+                    CTSanPham productUpdateCount = db.CTSanPhams.FirstOrDefault(p => p.MaSP == item.MaSP && p.MaCT == item.MaCTSP);
+                    if (productUpdateCount != null)
+                        productUpdateCount.SoLuongTon -= item.SoLuong;
+                    db.SaveChanges();
+                }
+                Session["GioHang"] = null;
+                ViewBag.GioHangCSDL = null;
+                Session["GioHangTam"] = null;
+                ViewBag.GioHangTam = null;
+                return RedirectToAction("ShowCardUser","Home");
+            }
+            else
+            {
+                return View("ThongBaoKhongThanhCong");
+            }
         }
+           
 
         [HttpPost]
         public ActionResult SavePayment()
         {
-            var bien = 0;
+          
 
             return View("ShowCardProduct");
 
@@ -517,7 +618,10 @@ namespace WebSiteClothesStore.Controllers
         {
             return View();
         }
-
+        public ActionResult ThongBaoKhongThanhCong()
+        {
+            return View();
+        }
         public ActionResult VoteForProduct(int maCTDH , string status)
         {
             int like=0;
