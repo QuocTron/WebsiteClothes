@@ -257,7 +257,6 @@
     <Content Include="Views\Card\ThongBaoDatHang.cshtml" />
     <Content Include="Views\Home\DetailCard.cshtml" />
     <Content Include="Views\TimKiem\KQTimKiem.cshtml" />
-    <Content Include="Views\TimKiem\KQTimKiemPartial.cshtml" />
     <Content Include="Views\DanhMuc\ListDanhMuc.cshtml" />
     <Content Include="Views\DanhMuc\Edit.cshtml" />
     <Content Include="Views\DanhMuc\Create.cshtml" />
@@ -287,6 +286,7 @@
     <Content Include="Views\BangSanPham\ListProductAdmin.cshtml" />
     <Content Include="Views\DonDatHang\ListDonHangDaThanhToan.cshtml" />
     <Content Include="Views\DonDatHang\ListDonDatHangDaHuy.cshtml" />
+    <Content Include="Views\TimKiem\KQTimKiemPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

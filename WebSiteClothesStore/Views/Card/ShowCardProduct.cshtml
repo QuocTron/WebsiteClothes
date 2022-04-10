@@ -212,7 +212,7 @@
                         <tr>
                             <td>Số điện thoại</td>
                             <td>
-                                <input type="number" id="Email" name="Email" class="Email" value="@kh.SDT" />
+                                <input type="number" id="SDT" name="SDT" class="SDT" value="@kh.SDT" />
 
                                 <span style="color:red;" id="TB_SDT"></span>
                             </td>
@@ -467,9 +467,30 @@
             }, 5000)
         }
     });
-
+    function checkPhoneNumber() {
+        var flag = false;
+        var phone = $('#SDT').val().trim(); // ID của trường Số điện thoại
+        phone = phone.replace('(+84)', '0');
+        phone = phone.replace('+84', '0');
+        phone = phone.replace('0084', '0');
+        phone = phone.replace(/ /g, '');
+        if (phone != '') {
+            var firstNumber = phone.substring(0, 2);
+            if ((firstNumber == '09' || firstNumber == '08') && phone.length == 10) {
+                if (phone.match(/^\d{10}/)) {
+                    flag = true;
+                }
+            } else if (firstNumber == '01' && phone.length == 11) {
+                if (phone.match(/^\d{11}/)) {
+                    flag = true;
+                }
+            }
+        }
+        return flag;
+    }
     $("#btn-dathang").click(function () {
         var loi = 0;
+       
         if ($("#TenKH").val() == "") {
             $("#TB_TenKhachHang").text("Tên khách hàng không được bỏ trống");
             loi++;
@@ -501,7 +522,13 @@
 
             $("#TB_SDT").text("");
         }
+        if (!checkPhoneNumber()) {
+            $('#dienthoai').parents('div.form-group').addClass('has-error'); // ID của trường Số điện thoại
+            $('#dienthoai').focus(); // ID của trường Số điện thoại
+            $(".lableErrorSDT").html("Vui lòng nhập đúng dịnh dạng số điện thoại");
+            loi++;
 
+        }
         if (loi != 0) {// có lỗi
             return false;
             // ngăn sự kiện submit đến server
