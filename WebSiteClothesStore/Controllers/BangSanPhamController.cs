@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using WebSiteClothesStore.Models;
 using System.IO;
+using OfficeOpenXml;
+
 namespace WebSiteClothesStore.Controllers
 {
     public class BangSanPhamController : Controller
@@ -183,6 +185,36 @@ namespace WebSiteClothesStore.Controllers
             context.BangSanPhams.Remove(D_sp);
             context.SaveChanges();
             return RedirectToAction("ListSanPham");
+        }
+        public ActionResult Export()
+        {
+            var data = context.BangSanPhams.ToList();
+
+            var stream = new MemoryStream();
+            using (var package = new ExcelPackage(stream))
+            {
+                var sheet = package.Workbook.Worksheets.Add("Loai");
+                sheet.Cells[1, 1].Value ="Mã Sản Phẩm";
+                sheet.Cells[1, 2].Value = "Tên Sản Phẩm";
+                sheet.Cells[1, 3].Value = "Giá";
+                sheet.Cells[1, 4].Value = "Ngày Cập Nhật";
+                sheet.Cells[1, 5].Value = "Mã Seal";
+
+                int rowIndex = 2;
+                foreach(var item in data)
+                {
+                    sheet.Cells[rowIndex, 1].Value = item.MaSP;
+                    sheet.Cells[rowIndex, 2].Value = item.TenSP;
+                    sheet.Cells[rowIndex, 3].Value = item.Dongia;
+                    sheet.Cells[rowIndex, 4].Value = item.NgapCapNhat;
+                    sheet.Cells[rowIndex, 5].Value = item.GiamGia;
+                    rowIndex++;
+                }
+                package.Save();
+            }
+            stream.Position = 0;
+            var fileName = $"Loai_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }
 }

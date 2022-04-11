@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -126,6 +128,44 @@ namespace WebSiteClothesStore.Controllers
             // không được
             return RedirectToAction("ListTV");
 
+        }
+
+        public ActionResult Export()
+        {
+            var data = context.ThanhViens.ToList();
+
+            var stream = new MemoryStream();
+            using (var package = new ExcelPackage(stream))
+            {
+                var sheet = package.Workbook.Worksheets.Add("Loai");
+                sheet.Cells[1, 1].Value = "Mã Thành VIên";
+                sheet.Cells[1, 2].Value = "Tài Khoản";
+                sheet.Cells[1, 3].Value = "Họ Tên";
+                sheet.Cells[1, 4].Value = "Địa Chỉ";
+                sheet.Cells[1, 5].Value = "Email";
+                sheet.Cells[1, 6].Value = "SDT";
+                sheet.Cells[1, 7].Value = "Câu Hỏi";
+                sheet.Cells[1, 8].Value = "Mã Loại Thành Viên";
+
+
+                int rowIndex = 2;
+                foreach (var item in data)
+                {
+                    sheet.Cells[rowIndex, 1].Value = item.MaTV;
+                    sheet.Cells[rowIndex, 2].Value = item.TaiKhoan;
+                    sheet.Cells[rowIndex, 3].Value = item.HoTen;
+                    sheet.Cells[rowIndex, 4].Value = item.DiaChi;
+                    sheet.Cells[rowIndex, 5].Value = item.Email;
+                    sheet.Cells[rowIndex, 6].Value = item.SDT;
+                    sheet.Cells[rowIndex, 7].Value = item.CauHoi;
+                    sheet.Cells[rowIndex, 8].Value = item.MaLoaiTV;
+                    rowIndex++;
+                }
+                package.Save();
+            }
+            stream.Position = 0;
+            var fileName = $"Loai_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }
 }

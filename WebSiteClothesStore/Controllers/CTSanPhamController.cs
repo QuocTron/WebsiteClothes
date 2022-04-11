@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -124,6 +126,36 @@ namespace WebSiteClothesStore.Controllers
             // không được
             return RedirectToAction("ListCTSanPham");
 
+        }
+        public ActionResult Export()
+        {
+            var data = context.CTSanPhams.ToList();
+
+            var stream = new MemoryStream();
+            using (var package = new ExcelPackage(stream))
+            {
+                var sheet = package.Workbook.Worksheets.Add("Loai");
+                sheet.Cells[1, 1].Value = "Mã Chi Tiết";
+                sheet.Cells[1, 2].Value = "Kich Thước";
+                sheet.Cells[1, 3].Value = "Số Lượng Tồn";
+                sheet.Cells[1, 4].Value = "Mã Sản Phẩm";
+                
+
+                int rowIndex = 2;
+                foreach (var item in data)
+                {
+                    sheet.Cells[rowIndex, 1].Value = item.MaCT;
+                    sheet.Cells[rowIndex, 2].Value = item.KichThuoc;
+                    sheet.Cells[rowIndex, 3].Value = item.SoLuongTon;
+                    sheet.Cells[rowIndex, 4].Value = item.MaSP;
+                    
+                    rowIndex++;
+                }
+                package.Save();
+            }
+            stream.Position = 0;
+            var fileName = $"Loai_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }
 }
