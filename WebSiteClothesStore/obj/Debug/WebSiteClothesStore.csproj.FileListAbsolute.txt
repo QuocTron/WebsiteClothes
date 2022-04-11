@@ -683,3 +683,8 @@ D:\BaiNew\WebsiteClothes\WebSiteClothesStore\bin\Microsoft.IO.RecyclableMemorySt
 D:\BaiNew\WebsiteClothes\WebSiteClothesStore\bin\System.ComponentModel.Annotations.dll
 D:\BaiNew\WebsiteClothes\WebSiteClothesStore\bin\EPPlus.xml
 D:\BaiNew\WebsiteClothes\WebSiteClothesStore\bin\Microsoft.IO.RecyclableMemoryStream.xml
+E:\Codeweb\LaptrinhWeb\DoAnWeb\WebSiteClothesStore\WebSiteClothesStore\bin\EPPlus.dll
+E:\Codeweb\LaptrinhWeb\DoAnWeb\WebSiteClothesStore\WebSiteClothesStore\bin\Microsoft.IO.RecyclableMemoryStream.dll
+E:\Codeweb\LaptrinhWeb\DoAnWeb\WebSiteClothesStore\WebSiteClothesStore\bin\System.ComponentModel.Annotations.dll
+E:\Codeweb\LaptrinhWeb\DoAnWeb\WebSiteClothesStore\WebSiteClothesStore\bin\EPPlus.xml
+E:\Codeweb\LaptrinhWeb\DoAnWeb\WebSiteClothesStore\WebSiteClothesStore\bin\Microsoft.IO.RecyclableMemoryStream.xml

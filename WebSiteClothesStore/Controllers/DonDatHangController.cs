@@ -39,7 +39,7 @@ namespace WebSiteClothesStore.Controllers
                 sheet.Cells[1, 7].Value = "Ưu Đãi";
                 sheet.Cells[1, 8].Value = "Ngày Đặt";
                 sheet.Cells[1, 9].Value = "Ngày Giao";
-                sheet.Cells[1, 10].Value = "Tổng Tiền";
+                sheet.Cells[1, 8].Value = "Tổng Tiền";
                 int rowIndex = 2;
                 foreach (var item in listDonHang)
                 {
@@ -48,11 +48,11 @@ namespace WebSiteClothesStore.Controllers
                     sheet.Cells[rowIndex, 3].Value = item.KhachHang.DiaChi;
                     sheet.Cells[rowIndex, 4].Value = item.KhachHang.Email;
                     sheet.Cells[rowIndex, 5].Value = item.TinhTrangDDH;
-                    sheet.Cells[rowIndex, 6].Value = item.DaThanhToan;
+                    sheet.Cells[rowIndex, 6].Value = item.DaThanhToan==true? "Đã thanh toán": "Chưa thanh toán";
                     sheet.Cells[rowIndex, 7].Value = item.UuDai;
                     sheet.Cells[rowIndex, 8].Value = item.NgayDat.ToString();
-                    sheet.Cells[rowIndex, 9].Value = item.NgayDat;
-                    sheet.Cells[rowIndex, 8].Value = tongTienDaThanhToan;
+                    sheet.Cells[rowIndex, 9].Value = item.NgayGiao.ToString();
+                    sheet.Cells[rowIndex, 10].Value = tongTienDaThanhToan;
                     rowIndex++;
                 }
                 package.Save();
@@ -68,7 +68,7 @@ namespace WebSiteClothesStore.Controllers
             {
                 return RedirectToAction("DangNhap", "Admin");
             }
-            var listDonHang = context.DonDatHangs.Where(p => p.DaDat == true && p.DaThanhToan != true && p.DaHuy != true).OrderBy(p=>p.NgayDat);
+            var listDonHang = context.DonDatHangs.Where(p => p.DaDat == true && p.DaThanhToan != true &&(p.TinhTrangDDH.Contains("Đang giao")||p.TinhTrangDDH.Contains("Khách không nhận hàng"))).OrderBy(p=>p.NgayDat);
             return View(listDonHang);
         }
         public ActionResult Export1()
@@ -223,8 +223,9 @@ namespace WebSiteClothesStore.Controllers
             var donHang = context.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDDH);
             if (donHang != null)
             {
-                donHang.TinhTrangDDH = status == true ? "Đã giao" : "Đang Giao";
+                donHang.TinhTrangDDH = status == true ? "Đã giao" : "Khách không nhận hàng";
                 donHang.DaThanhToan = status;
+                donHang.DaHuy = status == false ? true :false;
                 context.SaveChanges();
             }
             return Content(status.ToString());

@@ -37,7 +37,7 @@
     <div class="title-update">
 
         <div class="col-md-3 market-update-gd item-title">
-            <a href="@Url.Action("ListDanhMuc","DanhMuc")">
+            <a href="@Url.Action("ListDanhMuc","DanhMuc")" class="itemOption">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
@@ -55,7 +55,7 @@
 
 
         <div class="col-md-3 market-update-gd item-title">
-            <a href="@Url.Action("ListSanPham","BangSanPham")">
+            <a href="@Url.Action("ListSanPham","BangSanPham")" class="itemOption">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
@@ -74,7 +74,7 @@
 
 
         <div class="col-md-3 market-update-gd item-title">
-            <a href="@Url.Action("ListCTSanPham","CTSanPham")">
+            <a href="@Url.Action("ListCTSanPham","CTSanPham")" class="itemOption">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
@@ -92,14 +92,14 @@
 
 
         <div class="col-md-3 market-update-gd item-title">
-            <a href="@Url.Action("ListDonHangDaGiao","DonDatHang")">
+            <a href="@Url.Action("ListDonHangDaGiao","DonDatHang")" class="itemOption">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
                     <div class="col-md-10 market-update-left">
                         <h4>Đơn hàng đã giao</h4>
-                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan == true).Count()) đơn hàng</h3>
+                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan == true && n.TinhTrangDDH.Contains("Đã giao")).Count()) đơn hàng</h3>
                         <p>Doanh thu: (@context.DonDatHangs.Where(n => n.DaThanhToan == true && n.TinhTrangDDH.Contains("Đã giao")).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
                     </div>
                     <div class="clearfix"> </div>
@@ -109,15 +109,15 @@
 
 
         <div class="col-md-3 market-update-gd item-title">
-            <a href="@Url.Action("ListDonHangDaThanhToan","DonDatHang")">
+            <a href="@Url.Action("ListDonHangDaThanhToan","DonDatHang")" class="itemOption">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
                     <div class="col-md-10 market-update-left">
                         <h4>Đơn hàng đã được thanh toán</h4>
-                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Count()) đơn hàng</h3>
-                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaThanhToan == true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
+                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan == true).Count()) đơn hàng</h3>
+                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaThanhToan == true && n.DaHuy != true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -125,15 +125,15 @@
         </div>
 
         <div class="col-md-3 market-update-gd item-title">
-            <a href="@Url.Action("ListDonHangDangGiao","DonDatHang")">
+            <a href="@Url.Action("ListDonHangDangGiao","DonDatHang")" class="itemOption">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
                     <div class="col-md-10 market-update-left">
                         <h4>Đơn hàng đang giao</h4>
-                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Count()) đơn hàng</h3>
-                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaThanhToan == true && n.TinhTrangDDH.Contains("Đang giao")).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
+                        <h3>(@context.DonDatHangs.Where(n => n.DaDat == true && n.DaHuy != true && (n.TinhTrangDDH.Contains("Đang giao") || n.TinhTrangDDH.Contains("Khách không nhận hàng"))).Count()) đơn hàng</h3>
+                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaDat == true && n.DaHuy != true && n.TinhTrangDDH.Contains("Đang giao")).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -141,15 +141,27 @@
         </div>
 
         <div class="col-md-3 market-update-gd item-title">
-            <a href="@Url.Action("ListDonDatHangDaHuy","DonDatHang")">
+            <a href="@Url.Action("ListDonDatHangDaHuy","DonDatHang")" class="itemOption">
                 <div class="market-update-block clr-block-2">
                     <div class="col-md-2 market-update-right">
                         <i class="fa fa-eye"> </i>
                     </div>
                     <div class="col-md-10 market-update-left">
                         <h4>Đơn hàng đã bị hủy</h4>
-                        <h3>(@context.DonDatHangs.Where(n => n.DaThanhToan != true).Count()) đơn hàng</h3>
-                        <p>Tổng số tiền chưa thanh toán: (@context.DonDatHangs.Where(n => n.DaThanhToan != true && n.DaHuy!=true).Sum(p => p.CTDonDatHangs.Sum(n => n.DonGia * n.SoLuong)).ToString("#,##")) VNĐ</p>
+                        <h3>(<span class="amountCardDestroy">@context.DonDatHangs.Where(n => n.DaHuy == true).Count()</span>) đơn hàng</h3>
+                        @{
+                            var lis = context.DonDatHangs.Where(n => n.DaThanhToan != true && n.DaHuy == true);
+                            if (lis.Count() == 0)
+                            {
+
+
+                                <p>Không có đơn nào</p>
+                            }
+                            else
+                            {
+                                <p>Hiện tại có :(<span class="amountCardDestroyP">@context.DonDatHangs.Where(n => n.DaHuy == true).Count()</span>) đơn hàng đã bị hủy</p>
+                            }
+                        }
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -178,9 +190,10 @@
 @RenderSection("upload", required: false)
 
 <style>
-    .market-update-gd a{
-        width:100%;
+    .market-update-gd a {
+        width: 100%;
     }
+
     .title-update {
         margin-top: 30px;
         width: 100%;
@@ -188,29 +201,46 @@
         display: flex;
         justify-content: space-around;
     }
+
     .market-update-gd {
         width: 18%;
         height: 200px;
         border: 2px solid black;
         display: flex;
     }
-    .market-update-block{
-        width:100%;
+
+    .market-update-block {
+        width: 100%;
     }
+
     .container-products {
         margin-top: 100px;
     }
-    .contentCreatePro{
 
+    .contentCreatePro {
     }
-    .title-update{
-        display:flex;
-        flex-wrap:wrap;
+
+    .title-update {
+        display: flex;
+        flex-wrap: wrap;
     }
-    .item-title{
-        margin-top:20px;
+
+    .item-title {
+        margin-top: 20px;
     }
-    .container{
-        margin-top:300px;
+
+    .container {
+        margin-top: 300px;
+    }
+
+    .itemOption.active {
+        background-color: orange;
+        color: white;
     }
 </style>
+
+<script>
+    $(".itemOption").click(function () {
+        $(this).addClass("active");
+    })
+</script>

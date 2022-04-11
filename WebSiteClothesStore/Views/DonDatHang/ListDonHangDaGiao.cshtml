@@ -105,7 +105,7 @@
     <tr>
         <td>
             @{
-                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p => p.DonDatHang.DaThanhToan == true && p.DonDatHang.DaDat == true).Sum(p => p.DonGia * p.SoLuong);
+                var tongTienDaThanhToan = context.CTDonDatHangs.Where(n => n.DonDatHang.DaThanhToan == true && n.DonDatHang.TinhTrangDDH.Contains("Đã giao")).Sum(p => p.DonGia * p.SoLuong);
             }
             Tổng số tiền đã thanh toán : @tongTienDaThanhToan.ToString("#,##") VNĐ
         </td>

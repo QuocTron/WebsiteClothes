@@ -69,12 +69,12 @@
                 if (item.DaThanhToan == true)
                 {
                     <option value="true"> Đã thanh toán</option>
-                    <option value="false"> Chưa thanh toán</option>
+                    <option value=""> Chưa thanh toán</option>
                     <option value="false"> Khách không nhận hàng</option>
                 }
                 else
                 {
-                    <option value="false"> Chưa thanh toán</option>
+                    <option value=""> Chưa thanh toán</option>
                     <option value="true"> Đã thanh toán</option>
                     <option value="false"> Khách không nhận hàng</option>
                 }
@@ -111,7 +111,7 @@
     <tr>
         <td>
             @{
-                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p => p.DonDatHang.DaThanhToan == false && p.DonDatHang.DaDat == true).Sum(p => p.DonGia * p.SoLuong);
+                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p =>p.DonDatHang.DaDat == true&&p.DonDatHang.DaHuy!=true && (p.DonDatHang.TinhTrangDDH.Contains("Đang giao") || p.DonDatHang.TinhTrangDDH.Contains("Khách không nhận hàng"))).Sum(p => p.DonGia * p.SoLuong);
             }
             Tổng số tiền chưa thanh toán : @tongTienDaThanhToan.ToString("#,##") VNĐ
         </td>
@@ -126,17 +126,30 @@
         var select = trDonHang.querySelector(".selectTinhTrangDonHang");
         var valueSelect = $(select).val();
         var tdTinhTrangGiao = trDonHang.querySelector(".trangThaiGiao")
-        $.ajax({
-            type: "POST",
-            data: { maDDH: idDDH, status: valueSelect },
-            url: "/DonDatHang/CapNhatDonDat",
-            success: function (status) {
-                $(tdTinhTrangGiao).html(status == true?"Đã giao":"Đang giao");
-            },
-            error: function (err) {
-                alert('Error ', err.statusText);
-            }
-        })
-        console.log($(select).val());
+        var valueAmountCardDestroy = $(".amountCardDestroy").text();
+
+        console.log(valueAmountCardDestroy);
+        var valueChange = parseInt(valueAmountCardDestroy)
+        if (valueSelect != "") {
+            $.ajax({
+                type: "POST",
+                data: { maDDH: idDDH, status: valueSelect },
+                url: "/DonDatHang/CapNhatDonDat",
+                success: function (status) {
+                    $(tdTinhTrangGiao).html(status == true ? "Đã giao" : "Khách không nhận hàng");
+                    if (status == "False") {
+                        $(".amountCardDestroy").html("");
+                        $(".amountCardDestroy").html((valueChange+1));
+                        $(".amountCardDestroyP").html((valueChange + 1));
+
+                    }
+                },
+                error: function (err) {
+                    alert('Error ', err.statusText);
+                }
+            })
+        } else {
+            alert('Bạn không được cập nhật chưa thanh toán');
+        }
     })
 </script>

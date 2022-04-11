@@ -36,12 +36,7 @@
         <th>
             @Html.DisplayNameFor(model => model.NgayDat)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayGiao)
-        </th>
-        <th>
-            Tổng tiền:
-        </th>
+        
         <th></th>
     </tr>
 
@@ -74,31 +69,14 @@
                 @Html.DisplayFor(modelItem => item.NgayDat)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NgayGiao)
-            </td>
-            <td>
-                @{
-                    double tongTien = (double)context.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(n => n.SoLuong * n.DonGia);
-                }
-                @tongTien.ToString("#,##") VNĐ
-            </td>
-            <td>
                 <button class="capNhatTrangThai" data-id="@item.MaDDH"> Cập nhật</button>
 
                 @Html.ActionLink("DeleteDDH", "DonDatHang", new { id = item.MaDDH })
 
             </td>
         </tr>
-
     }
-    <tr>
-        <td>
-            @{
-                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p => p.DonDatHang.DaThanhToan == false && p.DonDatHang.DaDat == true).Sum(p => p.DonGia * p.SoLuong);
-            }
-            Tổng số tiền chưa thanh toán : @tongTienDaThanhToan.ToString("#,##") VNĐ
-        </td>
-    </tr>
+    
 </table>
 
 
