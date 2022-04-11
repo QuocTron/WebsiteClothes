@@ -64,19 +64,19 @@
                 <p class="trangThaiGiao">@item.TinhTrangDDH</p>
             </td>
             <td>
-                    @{
-                        if (item.DaThanhToan == true)
-                        {
-                            <span value="true"> Đã thanh toán</span>
-                       
-                        }
-                        else
-                        {
-                            <span value="false"> Chưa thanh toán</span>
-              
-                        }
+                @{
+                    if (item.DaThanhToan == true)
+                    {
+                        <span value="true"> Đã thanh toán</span>
 
                     }
+                    else
+                    {
+                        <span value="false"> Chưa thanh toán</span>
+
+                    }
+
+                }
 
 
             </td>
@@ -107,7 +107,7 @@
     <tr>
         <td>
             @{
-                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p => p.DonDatHang.DaThanhToan == true && p.DonDatHang.DaDat == true&&p.DonDatHang.DaHuy!=true).Sum(p => p.DonGia * p.SoLuong);
+                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p => p.DonDatHang.DaThanhToan == true && p.DonDatHang.DaDat == true && p.DonDatHang.DaHuy != true).Sum(p => p.DonGia * p.SoLuong);
             }
             Tổng số tiền chưa thanh toán : @tongTienDaThanhToan.ToString("#,##") VNĐ
         </td>
@@ -127,7 +127,7 @@
             data: { maDDH: idDDH, status: valueSelect },
             url: "/DonDatHang/CapNhatDonDat",
             success: function (status) {
-                $(tdTinhTrangGiao).html(status == true?"Đã giao":"Đang giao");
+                $(tdTinhTrangGiao).html(status == true ? "Đã giao" : "Đang giao");
             },
             error: function (err) {
                 alert('Error ', err.statusText);
@@ -136,3 +136,16 @@
         console.log($(select).val());
     })
 </script>
+<style>
+    .table {
+        border: 2px solid #000000;
+    }
+
+    th {
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+    }
+</style>

@@ -204,7 +204,7 @@
                         <tr>
                             <td>Email</td>
                             <td>
-                                <input type="email" id="Email" name="Email" class="Email" value="@kh.Email" />
+                                <input type="email" id="email" name="Email" class="Email" value="@kh.Email" />
                                 <span id="ktEmail"></span>
                             </td>
 
@@ -280,14 +280,14 @@
                         <td>Email</td>
                         <td>
                             <input type="email" id="Email" name="Email" class="Email" value="@ViewBag.KhachHang.Email" />
-                            <span id="ktEmail"></span>
+                            <span style="color:red;" id="TB_Email"></span>
                         </td>
 
                     </tr>
                     <tr>
                         <td>Số điện thoại</td>
                         <td>
-                            <input type="number" id="Email" name="Email" class="Email" value="@ViewBag.KhachHang.SDT" />
+                            <input type="number" id="SDT" name="SDT" class="SDT" value="@ViewBag.KhachHang.SDT" />
 
                             <span style="color:red;" id="TB_SDT"></span>
                         </td>
@@ -488,6 +488,7 @@
         }
         return flag;
     }
+    var formatEmail = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     $("#btn-dathang").click(function () {
         var loi = 0;
        
@@ -523,11 +524,16 @@
             $("#TB_SDT").text("");
         }
         if (!checkPhoneNumber()) {
-            $('#dienthoai').parents('div.form-group').addClass('has-error'); // ID của trường Số điện thoại
-            $('#dienthoai').focus(); // ID của trường Số điện thoại
-            $(".lableErrorSDT").html("Vui lòng nhập đúng dịnh dạng số điện thoại");
+            $('#SDT').focus(); // ID của trường Số điện thoại
+            $("#TB_SDT").html("Vui lòng nhập đúng dịnh dạng số điện thoại");
             loi++;
 
+        }
+        if (!formatEmail.test($("#Email").val())) {
+
+            $('#Email').focus();
+            $("#TB_Email").html("Vui lòng nhập đúng dịnh dạng email");
+            loi++;
         }
         if (loi != 0) {// có lỗi
             return false;

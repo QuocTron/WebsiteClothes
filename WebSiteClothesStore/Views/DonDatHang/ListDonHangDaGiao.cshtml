@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WebSiteClothesStore.Models.DonDatHang>
-    @using WebSiteClothesStore.Models
+@using WebSiteClothesStore.Models
 
 @{
     ViewBag.Title = "ListDonHangDaGiao";
@@ -47,59 +47,59 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.SDT)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.DiaChi)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.Email)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TinhTrangDDH)
-    </td>
-    <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TinhTrangDDH)
+            </td>
+            <td>
 
-        @{
-            if (item.DaThanhToan == true)
-            {
-                <p>Đã thanh toán</p>
+                @{
+                    if (item.DaThanhToan == true)
+                    {
+                        <p>Đã thanh toán</p>
 
-            }
-            else
-            {
-                <p>Chưa thanh toán</p>
+                    }
+                    else
+                    {
+                        <p>Chưa thanh toán</p>
 
-            }
-        }
+                    }
+                }
 
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.UuDai)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NgayDat)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NgayGiao)
-    </td>
-    <td>
-        @{
-            double tongTien = (double)context.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(n => n.SoLuong * n.DonGia);
-        }
-        @tongTien.ToString("#,##") VNĐ
-    </td>
-    <td>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UuDai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayGiao)
+            </td>
+            <td>
+                @{
+                    double tongTien = (double)context.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(n => n.SoLuong * n.DonGia);
+                }
+                @tongTien.ToString("#,##") VNĐ
+            </td>
+            <td>
 
-        @Html.ActionLink("Details", "DetailDHH", new { id = item.MaDDH })
+                @Html.ActionLink("Details", "DetailDHH", new { id = item.MaDDH })
 
-    </td>
-</tr>
+            </td>
+        </tr>
 
     }
     <tr>
@@ -115,3 +115,16 @@
     @*@Html.ActionLink("Create New", "Create")*@
     @Html.ActionLink("Xuất ra Excel", "Export")
 </p>
+<style>
+    .table {
+        border: 2px solid #000000;
+    }
+
+    th {
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+    }
+</style>

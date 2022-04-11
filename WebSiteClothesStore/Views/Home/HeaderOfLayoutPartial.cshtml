@@ -605,8 +605,7 @@
     }
 </style>
 <script>
-
-
+   
     $("#btnDangNhap").click(function () {
         $(".formLogin").css({
             "display": "block",
@@ -646,5 +645,52 @@
             "display": "block",
         });
         $(".register-form").fadeOut(500);
+    })
+
+    function checkPhoneNumber() {
+        var flag = false;
+        var phone = $("#sdt").val().trim(); // ID của trường Số điện thoại
+        phone = phone.replace('(+84)', '0');
+        phone = phone.replace('+84', '0');
+        phone = phone.replace('0084', '0');
+        phone = phone.replace(/ /g, '');
+        if (phone != '') {
+            var firstNumber = phone.substring(0, 2);
+            if ((firstNumber == '09' || firstNumber == '08') && phone.length == 10) {
+                if (phone.match(/^\d{10}/)) {
+                    flag = true;
+                }
+            } else if (firstNumber == '01' && phone.length == 11) {
+                if (phone.match(/^\d{11}/)) {
+                    flag = true;
+                }
+            }
+        }
+        return flag;
+    }
+    var formatEmail = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+   
+    }
+    $("#btnRegister").click(function () {
+        var matKhau = $("#matkhau").val();
+        var reMatKhau = $("#reMatKhau").val();
+        var sdt = $("#sdt").val();
+        if (matKhau != reMatKhau) {
+            alert("Mật khẩu không giống nhau");
+            $("#reMatKhau").focus;
+            return false;
+        }
+        if (!checkPhoneNumber()) {
+            alert("Không đúng định dạng số điện thoại");
+            $("#sdt").focus;
+            return false;
+        }
+        if (!formatEmail.test($("#email").val())) {
+
+            $('#email').focus();
+            alert("Định dạne Email bị sai");
+            return false;
+        }
+        
     })
 </script>

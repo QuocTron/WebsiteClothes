@@ -30,7 +30,7 @@
         public string Email { get; set; }
 
         [StringLength(12)]
-        [RegularExpression("/((09|03|07|08|05)+([0 - 9]{8})\b)/g", ErrorMessage = "Số điện thoại không hợp lệ")]
+
         public string SDT { get; set; }
 
         public int? MaTV { get; set; }

@@ -47,71 +47,71 @@
 
     @foreach (var item in Model)
     {
-<tr id="@item.MaDDH">
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.SDT)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.DiaChi)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.KhachHang.Email)
-    </td>
-    <td>
-        <p class="trangThaiGiao">@item.TinhTrangDDH</p>
-    </td>
-    <td>
-        <select name="tinhTrangThanhToan" class="selectTinhTrangDonHang">
-            @{
-                if (item.DaThanhToan == true)
-                {
-                    <option value="true"> Đã thanh toán</option>
-                    <option value=""> Chưa thanh toán</option>
-                    <option value="false"> Khách không nhận hàng</option>
+        <tr id="@item.MaDDH">
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.Email)
+            </td>
+            <td>
+                <p class="trangThaiGiao">@item.TinhTrangDDH</p>
+            </td>
+            <td>
+                <select name="tinhTrangThanhToan" class="selectTinhTrangDonHang">
+                    @{
+                        if (item.DaThanhToan == true)
+                        {
+                            <option value="true"> Đã thanh toán</option>
+                            <option value=""> Chưa thanh toán</option>
+                            <option value="false"> Khách không nhận hàng</option>
+                        }
+                        else
+                        {
+                            <option value=""> Chưa thanh toán</option>
+                            <option value="true"> Đã thanh toán</option>
+                            <option value="false"> Khách không nhận hàng</option>
+                        }
+
+                    }
+
+                </select>
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UuDai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayGiao)
+            </td>
+            <td>
+                @{
+                    double tongTien = (double)context.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(n => n.SoLuong * n.DonGia);
                 }
-                else
-                {
-                    <option value=""> Chưa thanh toán</option>
-                    <option value="true"> Đã thanh toán</option>
-                    <option value="false"> Khách không nhận hàng</option>
-                }
+                @tongTien.ToString("#,##") VNĐ
+            </td>
+            <td>
+                <button class="capNhatTrangThai" data-id="@item.MaDDH"> Cập nhật</button>
 
-            }
+                @Html.ActionLink("DetailDHH", "DonDatHang", new { id = item.MaDDH })
 
-        </select>
-
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.UuDai)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NgayDat)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.NgayGiao)
-    </td>
-    <td>
-        @{
-            double tongTien = (double)context.CTDonDatHangs.Where(p => p.MaDDH == item.MaDDH).Sum(n => n.SoLuong * n.DonGia);
-        }
-        @tongTien.ToString("#,##") VNĐ
-    </td>
-    <td>
-        <button class="capNhatTrangThai" data-id="@item.MaDDH"> Cập nhật</button>
-
-        @Html.ActionLink("DetailDHH", "DonDatHang", new { id = item.MaDDH })
-
-    </td>
-</tr>
+            </td>
+        </tr>
 
     }
     <tr>
         <td>
             @{
-                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p =>p.DonDatHang.DaDat == true&&p.DonDatHang.DaHuy!=true && (p.DonDatHang.TinhTrangDDH.Contains("Đang giao") || p.DonDatHang.TinhTrangDDH.Contains("Khách không nhận hàng"))).Sum(p => p.DonGia * p.SoLuong);
+                var tongTienDaThanhToan = context.CTDonDatHangs.Where(p => p.DonDatHang.DaDat == true && p.DonDatHang.DaHuy != true && (p.DonDatHang.TinhTrangDDH.Contains("Đang giao") || p.DonDatHang.TinhTrangDDH.Contains("Khách không nhận hàng"))).Sum(p => p.DonGia * p.SoLuong);
             }
             Tổng số tiền chưa thanh toán : @tongTienDaThanhToan.ToString("#,##") VNĐ
         </td>
@@ -139,7 +139,7 @@
                     $(tdTinhTrangGiao).html(status == true ? "Đã giao" : "Khách không nhận hàng");
                     if (status == "False") {
                         $(".amountCardDestroy").html("");
-                        $(".amountCardDestroy").html((valueChange+1));
+                        $(".amountCardDestroy").html((valueChange + 1));
                         $(".amountCardDestroyP").html((valueChange + 1));
 
                     }
@@ -153,3 +153,16 @@
         }
     })
 </script>
+<style>
+    .table {
+        border: 2px solid #000000;
+    }
+
+    th {
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+    }
+</style>

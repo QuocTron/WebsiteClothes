@@ -36,7 +36,7 @@
         <th>
             @Html.DisplayNameFor(model => model.NgayDat)
         </th>
-        
+
         <th></th>
     </tr>
 
@@ -59,7 +59,7 @@
                 <p class="trangThaiGiao">@item.TinhTrangDDH</p>
             </td>
             <td>
-               Đã hủy
+                Đã hủy
 
             </td>
             <td>
@@ -76,7 +76,7 @@
             </td>
         </tr>
     }
-    
+
 </table>
 
 
@@ -92,7 +92,7 @@
             data: { maDDH: idDDH, status: valueSelect },
             url: "/DonDatHang/CapNhatDonDat",
             success: function (status) {
-                $(tdTinhTrangGiao).html(status == true?"Đã giao":"Đang giao");
+                $(tdTinhTrangGiao).html(status == true ? "Đã giao" : "Đang giao");
             },
             error: function (err) {
                 alert('Error ', err.statusText);
@@ -101,3 +101,16 @@
         console.log($(select).val());
     })
 </script>
+<style>
+    .table {
+        border: 2px solid #000000;
+    }
+
+    th {
+        border: 1px solid black;
+    }
+
+    td {
+        border: 1px solid black;
+    }
+</style>

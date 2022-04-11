@@ -99,46 +99,51 @@
 </table>
 
 <h2>Thông tin người nhận</h2>
-@if (Session["KhachHang"] != null)
-{
+<table border="2">
 
-    KhachHang client = Session["KhachHang"] as KhachHang;
 
-    <tr>
-        <td>Họ tên</td>
-        <td>
-            @client.TenKH
-        </td>
+    @if (Session["KhachHang"] != null)
+    {
 
-    </tr>
-    <tr>
-        <td>Địa chỉ</td>
-        <td>
-            @client.DiaChi
-        </td>
+        KhachHang client = Session["KhachHang"] as KhachHang;
 
-    </tr>
-    <tr>
-        <td>Email</td>
-        <td>
-            @client.Email
-        </td>
-    </tr>
-    <tr>
-        <td>Số điện thoại</td>
-        <td>
-            @client.SDT
-        </td>
-    </tr>
-}
+        <tr>
+            <td>Họ tên</td>
+            <td>
+                @client.TenKH
+            </td>
 
+        </tr>
+        <tr>
+            <td>Địa chỉ</td>
+            <td>
+                @client.DiaChi
+            </td>
+
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                @client.Email
+            </td>
+        </tr>
+        <tr>
+            <td>Số điện thoại</td>
+            <td>
+                @client.SDT
+            </td>
+        </tr>
+    }
+</table>
 
 <div class="orderPro">
     <h2>Tiến hành đặt hàng</h2>
 
-    <span>Chọn hình thức thanh toán: </span>
+    <span style="display:flex">Chọn hình thức thanh toán: </span>
     <a href="@Url.Action("PaymentByMomo", "Card")" class="btn btn-sussce btn-Thanh-toan-Momo">Thanh toán qua Momo</a>
     <a href="@Url.Action("Payment", "Card")" class="btn btn-sussce btn-Thanh-toan-Momo">Thanh toán khi nhận hàng</a>
 </div>
 
-<a href="@Url.Action("ShowCardProduct", "Card")" class="btn btn-sussce btn-Thanh-toan-Momo">Thanh toán qua Momo</a>
+<a href="@Url.Action("ShowCardProduct", "Card")" class="btn btn-sussce btn-Thanh-toan-Momo">Chỉnh sửa thông tin người đặt</a>
+<style>
+</style>
