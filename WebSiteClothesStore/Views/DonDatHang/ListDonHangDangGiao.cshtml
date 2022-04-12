@@ -136,12 +136,16 @@
                 data: { maDDH: idDDH, status: valueSelect },
                 url: "/DonDatHang/CapNhatDonDat",
                 success: function (status) {
-                    $(tdTinhTrangGiao).html(status == true ? "Đã giao" : "Khách không nhận hàng");
+                    $(tdTinhTrangGiao).html(status == "True" ? "Đã giao" : "Khách không nhận hàng");
                     if (status == "False") {
                         $(".amountCardDestroy").html("");
                         $(".amountCardDestroy").html((valueChange + 1));
                         $(".amountCardDestroyP").html((valueChange + 1));
 
+                    } else {
+                        $(".amountCardDestroy").html("");
+                        $(".amountCardDestroy").html((valueChange - 1));
+                        $(".amountCardDestroyP").html((valueChange - 1));
                     }
                 },
                 error: function (err) {

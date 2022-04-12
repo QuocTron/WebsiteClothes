@@ -10,17 +10,17 @@
 <table class="table">
     <tr>
         <th>
-           Tên sản phẩm
+            Tên sản phẩm
         </th>
         <th>
-           Kích thước
+            Kích thước
         </th>
-       
+
         <th>
             Số lượng mua
         </th>
         <th>
-            Đơn giá 
+            Đơn giá
         </th>
         <th>
             Đánh giá
@@ -29,23 +29,58 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BangSanPham.TenSP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CTSanPham.KichThuoc)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.SoLuong)
-            </td>
-            <td>
-                @{
-                    double thanhTien = (double)item.SoLuong * (double)@item.DonGia;
-                }
-                <span>@thanhTien VNĐ</span>
-            </td>
+
+
+<tr>
+    @if (item.MaSP == null)
+    {
+
+
+        <td>
+
+            Sản phẩm không tồn tại
+        </td>
+    }
+    else
+    {
+        <td>
+
+            @Html.DisplayFor(modelItem => item.BangSanPham.TenSP)
+        </td>
+    }
+    @if (item.MaSP == null)
+    {
+
+
+
+
+        <td>
+
+            Sản phẩm không tồn tại
+        </td>
+    }
+    else
+    {
+        <td>
+            @Html.DisplayFor(modelItem => item.CTSanPham.KichThuoc)
+        </td>
+    }
+
+
+    <td>
+        @Html.DisplayFor(modelItem => item.SoLuong)
+    </td>
+    <td>
+        @{
+            double thanhTien = (double)item.SoLuong * (double)@item.DonGia;
+        }
+        <span>@thanhTien VNĐ</span>
+    </td>
+
+    @if (item.MaSP != null || item.MaCTSP != null)
+    {
+        if (item.DonDatHang.DaThanhToan == true)
+        {
             <td id="@item.MaCTDDH">
                 @if (item.BinhChon == 1)
                 {
@@ -62,33 +97,39 @@
 
                     <i class="fa-solid fa-face-frown dislike status" data-id="@item.MaCTDDH"></i>
                 }
-
             </td>
-        </tr>
+        }
     }
-<tr style="font-weight: bold; text-align: left; color:red">
-    <td colspan="3"> </td>
-    <td colspan="10"> @Model.Sum(p => p.DonGia * p.SoLuong) VNĐ  </td>
+
 </tr>
-  
+    }
+    <tr style="font-weight: bold; text-align: left; color:red">
+        <td colspan="3"> </td>
+        <td colspan="10"> @Model.Sum(p => p.DonGia * p.SoLuong) VNĐ  </td>
+    </tr>
+
 </table>
-<a href="@Url.Action("ShowCardUser","Home")" > Quay về đơn hàng</a>
+<a href="@Url.Action("ShowCardUser","Home")"> Quay về đơn hàng</a>
 
 <style>
     .like, .dislike {
         color: black;
     }
-    .like:hover , .dislike:hover{
-        color:red;
-    }
-    .like.active{
-        color:red;
-    }
-    .dislike.active{
-        color:red;
-    }
-    tr, th{
-        text-align:center;
+
+        .like:hover, .dislike:hover {
+            color: red;
+        }
+
+        .like.active {
+            color: red;
+        }
+
+        .dislike.active {
+            color: red;
+        }
+
+    tr, th {
+        text-align: center;
     }
 </style>
 <script>
@@ -103,7 +144,7 @@
                 }
             });
             this.classList.add("active");
-           
+
             $.ajax({
                 type: "POST",
                 data: { maCTDH: maCTDH, status: "Yes" },

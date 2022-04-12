@@ -69,9 +69,9 @@
                 @Html.DisplayFor(modelItem => item.NgayDat)
             </td>
             <td>
-                <button class="capNhatTrangThai" data-id="@item.MaDDH"> Cập nhật</button>
+            
 
-                @Html.ActionLink("DeleteDDH", "DonDatHang", new { id = item.MaDDH })
+                @Html.ActionLink("Xóa đơn hàng", "DeleteDDH", new { id = item.MaDDH })
 
             </td>
         </tr>

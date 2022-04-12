@@ -24,7 +24,7 @@
                         Admin admin = (Admin)Session["TaiKhoanAdmin"];
                         if (admin != null)
                         {
-                            <li>Chào @admin.TenNV </li>
+                                <p>Chào: </p><li style="color: white" > @admin.TenNV </li>
                                 @Html.ActionLink(" Đăng xuất", "DangXuat", "Admin");
                         }
                         else

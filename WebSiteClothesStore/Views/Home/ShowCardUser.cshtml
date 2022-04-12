@@ -86,20 +86,20 @@
                         {
                             if (item.DaHuy != true)
                             {
-                                <a href="@Url.Action("DestroyCard","Home" ,new {@maDH = item.MaDDH })">
-                                    Hủy đơn hàng
+                                <a href="@Url.Action("DestroyCard","Home" ,new {@maDH = item.MaDDH })" style="color:red;">
+                                    Hủy đơn hàng | 
                                 </a>
                             }
                             else
                             {
-                                <a href="@Url.Action("ReOrderCard","Home" ,new {@maDH = item.MaDDH })">
-                                    Đặt lại đơn
+                                <a href="@Url.Action("ReOrderCard","Home" ,new {@maDH = item.MaDDH })" style="color:blue;">
+                                    Đặt lại đơn | 
                                 </a>
                             }
 
                         }
 
-                        <a href="@Url.Action("DetailCard","Home" ,new {@maDH = item.MaDDH })">
+                        <a href="@Url.Action("DetailCard","Home" ,new {@maDH = item.MaDDH })" style="color:black;">
                             Xem chi tiết đơn hàng
                         </a>
                     </td>

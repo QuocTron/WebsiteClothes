@@ -39,7 +39,7 @@ namespace WebSiteClothesStore.Controllers
                 sheet.Cells[1, 7].Value = "Ưu Đãi";
                 sheet.Cells[1, 8].Value = "Ngày Đặt";
                 sheet.Cells[1, 9].Value = "Ngày Giao";
-                sheet.Cells[1, 8].Value = "Tổng Tiền";
+                sheet.Cells[1, 10].Value = "Tổng Tiền";
                 int rowIndex = 2;
                 foreach (var item in listDonHang)
                 {
@@ -52,7 +52,7 @@ namespace WebSiteClothesStore.Controllers
                     sheet.Cells[rowIndex, 7].Value = item.UuDai;
                     sheet.Cells[rowIndex, 8].Value = item.NgayDat.ToString();
                     sheet.Cells[rowIndex, 9].Value = item.NgayGiao.ToString();
-                    sheet.Cells[rowIndex, 10].Value = tongTienDaThanhToan;
+                    sheet.Cells[rowIndex, 10].Value = context.CTDonDatHangs.Where(p=>p.MaDDH==item.MaDDH).Sum(n=>n.SoLuong*n.DonGia);
                     rowIndex++;
                 }
                 package.Save();

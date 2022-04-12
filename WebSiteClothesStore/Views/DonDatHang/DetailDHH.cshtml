@@ -8,7 +8,6 @@
 <h2>Đơn hàng</h2>
 
 <div>
-    <h4>DonDatHang</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -28,14 +27,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DaThanhToan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DaThanhToan)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.UuDai)
         </dt>
 
@@ -49,15 +40,6 @@
         <dd>
             @Html.DisplayFor(model => model.NgayDat)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayGiao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NgayGiao)
-        </dd>
-
     </dl>
 </div>
 <h2>Chi tiết đơn hàng</h2>
@@ -113,3 +95,11 @@ else
 {
     <h1>Không có sản phẩm nào</h1>
 }
+<style>
+    td{
+        border: 2px solid black;
+    }
+    .container {
+        text-align: left;
+    }
+</style>

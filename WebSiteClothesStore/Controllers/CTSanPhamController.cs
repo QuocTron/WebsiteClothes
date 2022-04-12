@@ -138,7 +138,7 @@ namespace WebSiteClothesStore.Controllers
                 sheet.Cells[1, 1].Value = "Mã Chi Tiết";
                 sheet.Cells[1, 2].Value = "Kich Thước";
                 sheet.Cells[1, 3].Value = "Số Lượng Tồn";
-                sheet.Cells[1, 4].Value = "Mã Sản Phẩm";
+                sheet.Cells[1, 4].Value = "Sản phẩm";
                 
 
                 int rowIndex = 2;
@@ -147,7 +147,7 @@ namespace WebSiteClothesStore.Controllers
                     sheet.Cells[rowIndex, 1].Value = item.MaCT;
                     sheet.Cells[rowIndex, 2].Value = item.KichThuoc;
                     sheet.Cells[rowIndex, 3].Value = item.SoLuongTon;
-                    sheet.Cells[rowIndex, 4].Value = item.MaSP;
+                    sheet.Cells[rowIndex, 4].Value = item.BangSanPham.TenSP;
                     
                     rowIndex++;
                 }

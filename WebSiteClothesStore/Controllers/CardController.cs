@@ -283,6 +283,7 @@ namespace WebSiteClothesStore.Controllers
             return RedirectToAction("ShowCardProduct");// gọi lại action ShowCardProduct
         }
 
+        
         public ActionResult OrderProducts(KhachHang kh)
         {
    
@@ -416,7 +417,7 @@ namespace WebSiteClothesStore.Controllers
             //}
 
             return View();
-        }
+         }
 
 
        
@@ -470,11 +471,43 @@ namespace WebSiteClothesStore.Controllers
                 return View("ThongBaoKhongThanhCong");
             }
             DonDatHang donDatHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDH);
+            int soLanMua = db.KhachHangs.Where(p => p.MaKH == donDatHang.MaKH).Count();
+            KhachHang kh = db.KhachHangs.FirstOrDefault(p => p.MaKH == donDatHang.MaKH);
+            ThanhVien tv = db.ThanhViens.FirstOrDefault(p => p.MaTV == kh.MaTV);
+            int uuDai = 0;
+            if (tv != null)
+            {
+                if (soLanMua > 0 && soLanMua < 5)
+                {
+                    tv.MaLoaiTV = 1;
+                }
+                if (soLanMua > 5 && soLanMua < 10)
+                {
+                    tv.MaLoaiTV = 2;
+                    uuDai = 10;
+                }
+                if (soLanMua > 10 && soLanMua < 15)
+                {
+                    tv.MaLoaiTV = 3;
+                    uuDai = 15;
+                }
+                if (soLanMua > 15 && soLanMua < 20)
+                {
+                    tv.MaLoaiTV = 4;
+                    uuDai = 20;
+                }
+                if (soLanMua > 20)
+                {
+                    tv.MaLoaiTV = 5;
+                    uuDai = 25;
+                }
+            }
             if (donDatHang != null)
             {
                 donDatHang.DaDat =true;
                 donDatHang.NgayGiao = DateTime.Now.AddDays(4);
                 donDatHang.DaThanhToan = false;
+                donDatHang.UuDai = uuDai;
                 db.SaveChanges();
             }
             foreach (var item in listDetailProduct)
@@ -576,11 +609,45 @@ namespace WebSiteClothesStore.Controllers
                 }
 
                 DonDatHang donDatHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maHoaDon);
+                int soLanMua = db.DonDatHangs.Where(p => p.MaKH == donDatHang.MaKH).Count();
+                KhachHang kh = db.KhachHangs.FirstOrDefault(p => p.MaKH == donDatHang.MaKH);
+                ThanhVien tv = db.ThanhViens.FirstOrDefault(p => p.MaTV == kh.MaTV);
+                int uuDai = 0;
+                if (tv != null)
+                {
+                    if(soLanMua>0 && soLanMua < 5)
+                    {
+                        tv.MaLoaiTV = 1;
+                    }
+                    if (soLanMua > 5 && soLanMua < 10)
+                    {
+                        tv.MaLoaiTV = 2;
+                        uuDai = 10;
+                    }
+                    if (soLanMua > 10 && soLanMua < 15)
+                    {
+                        tv.MaLoaiTV = 3;
+                        uuDai = 15;
+                    }
+                    if (soLanMua > 15 && soLanMua < 20)
+                    {
+                        tv.MaLoaiTV = 4;
+                        uuDai = 20;
+                    }
+                    if (soLanMua > 20)
+                    {
+                        tv.MaLoaiTV = 5;
+                        uuDai = 25;
+                    }
+                }
+                db.SaveChanges();
                 if (donDatHang != null)
                 {
                     donDatHang.DaDat = true;
                     donDatHang.NgayGiao = DateTime.Now.AddDays(4);
                     donDatHang.DaThanhToan = true;
+                    donDatHang.TinhTrangDDH = "Đang giao";
+                    donDatHang.UuDai =uuDai;
                     db.SaveChanges();
                 }
                 foreach (var item in listDetailProduct)
@@ -597,7 +664,7 @@ namespace WebSiteClothesStore.Controllers
                 ViewBag.GioHangCSDL = null;
                 Session["GioHangTam"] = null;
                 ViewBag.GioHangTam = null;
-                return RedirectToAction("ShowCardUser","Home");
+                return View("ThongBaoDatHang");
             }
             else
             {

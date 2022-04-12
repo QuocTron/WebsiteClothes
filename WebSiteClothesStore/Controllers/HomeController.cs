@@ -123,7 +123,7 @@ namespace WebSiteClothesStore.Controllers
             return Content("Tài khoản hoặc mật khẩu không đúng");// chuyển hướng trang thông qua view truy cập vào action rồi chuyển hướng tới view
 
         }
-        public ActionResult DangXuat()
+        public ActionResult DangXuat() 
         {
             Session["TaiKhoan"] = null;
             Session["KhachHang"] = null;
@@ -248,6 +248,7 @@ namespace WebSiteClothesStore.Controllers
         {
             var donHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDH);
             donHang.DaHuy =true;
+            donHang.TinhTrangDDH = "Khách không nhận hàng";
             db.SaveChanges();
             return RedirectToAction("ShowCardUser");
         }
@@ -255,6 +256,7 @@ namespace WebSiteClothesStore.Controllers
         {
             var donHang = db.DonDatHangs.FirstOrDefault(p => p.MaDDH == maDH);
             donHang.DaHuy = false;
+            donHang.TinhTrangDDH = "Đang giao";
             db.SaveChanges();
             return RedirectToAction("ShowCardUser");
         }
